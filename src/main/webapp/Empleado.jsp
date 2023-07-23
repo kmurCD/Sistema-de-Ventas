@@ -18,6 +18,9 @@
 	<div class="row">
 		<div class="col-6 col-sm-4">
 			<form action="EmpleadoS" method="post">
+					<div class="form-group" style="display: none;">
+					  <label>ID</label>
+					  <input type="text" name="txtId" class="form-control" value="${empleado.getId()}">=</div>			
 					<div class="form-group">
 					<label>Dni</label>
 						<input type="text" name="txtDni" class="form-control" value="${empleado.getDni()}"></div>			
@@ -36,6 +39,7 @@
 						<input type="text" name="txtUsuario" class="form-control"value="${empleado.getUser()}">
 					</div>
 					<div class="form-group my-3 text-center">
+					
 					 <input type="submit" name="menu" value="Agregar" class="btn btn-info text-white">
 					 <input type="submit" name="menu" value="Agregar" class="btn btn-info text-white">					
 					</div>					
@@ -85,6 +89,6 @@
 
 			 </table>			
 		</div>
-	</div>
+	</div>	
 </body>
 </html>
