@@ -59,4 +59,44 @@
     <servlet-name>EmpleadoS</servlet-name>
     <url-pattern>/EmpleadoS</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ProductosS</display-name>
+    <servlet-name>ProductosS</servlet-name>
+    <servlet-class>Servlet.ProductosS</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ProductosS</servlet-name>
+    <url-pattern>/ProductosS</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ClienteS</display-name>
+    <servlet-name>ClienteS</servlet-name>
+    <servlet-class>Servlet.ClienteS</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ClienteS</servlet-name>
+    <url-pattern>/ClienteS</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>VentaS</display-name>
+    <servlet-name>VentaS</servlet-name>
+    <servlet-class>Servlet.VentaS</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>VentaS</servlet-name>
+    <url-pattern>/VentaS</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ProductoS</display-name>
+    <servlet-name>ProductoS</servlet-name>
+    <servlet-class>Servlet.ProductoS</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ProductoS</servlet-name>
+    <url-pattern>/ProductoS</url-pattern>
+  </servlet-mapping>
 </web-app>
