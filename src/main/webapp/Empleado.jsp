@@ -28,10 +28,12 @@
                     <div class="form-group">
                         <label>Nombres</label>
                         <input type="text" name="txtNombres" class="form-control"value="${empleado.getNom()}">
+                        <span id="errorNombres"></span>
                     </div>
                     <div class="form-group">
                         <label>Telefono</label>
                         <input type="text" name="txtTelefono" class="form-control"value="${empleado.getTel()}">
+                        <span id="errorTelefono"></span>
                     </div>
                     <div class="form-group">
                     <label>Estado</label>
@@ -41,6 +43,7 @@
                     <div class="form-group">
                     <label>Usuario</label>
                         <input type="text" name="txtUsuario" class="form-control"value="${empleado.getUser()}">
+                        <span id="errorUsuario"></span>
                     </div>
                     <div class="form-group my-3 text-center">
                     
@@ -98,65 +101,59 @@
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
 <script type="text/javascript">
-	$(function() {
-	    $("form[name='formEmpleado']").validate({
-	        rules : {
-	            txtDni : {
-	                required : true,
-	                maxlength : 8,
-	                digits : true
-	            },                              
-	            txtNombres : {
-	                required : true,
-	                pattern: /^[A-Za-z\s]+$/, // Coma faltante después de la expresión regular
-	                digits: false // Quitamos esta línea ya que no es necesaria
-	            },
-	            txtTelefono : {
-	                required : true,
-	                maxlength : 9,
-	                digits: true 
-	            },
-	            txtEstado : {
-	                required : true,
-	                maxlength : 1,
-	                range: [0, 1]
-	            },
-	            txtUsuario: {
-	                required : true,
-	                maxlength : 5, // Cambiamos "digits" a "maxlength" para limitar el número de caracteres
-	                pattern: /^[A-Za-z0-9]+$/
-	            },
-	        },
-	        messages : {
-	            txtDni : {
-	                required :"Ingrese el DNI",
-	                maxlength :"El DNI debe tener máximo 8 caracteres",
-	                digits : "Este campo solo debe contener dígitos numéricos"
-	            },
-	            txtNombres : {
-	                required : "Ingrese un Nombre",                         
-	                pattern: "Este campo solo debe contener letras y espacios"
-	            },
-	            txtTelefono : {
-	                required : "Ingrese el Teléfono",
-	                maxlength : "El Teléfono debe tener máximo 9 dígitos",
-	                digits: "Este campo solo debe contener dígitos numéricos"
-	            },                               
-	            txtEstado : {
-	                required : "Ingrese el Estado (0 o 1)",
-	                digits : "El Estado solo debe contener dígitos",
-	                range: "El Estado solo debe ser 0 o 1"
-	            },
-	            txtUsuario: {
-	                required : "Ingrese un Usuario",
-	                maxlength : "El Usuario debe tener máximo 5 caracteres",
-	                pattern: "Este campo no permite espacios"
-	            },
-	        },
-	        submitHandler : function(form) {
-	            form.submit();
-	        }
-	    });
-	});
+    $(function() {
+        $("form[name='formEmpleado']")
+                .validate(
+                        {
+                            rules : {
+                                txtDni : {
+                                    required : true,
+                                    maxlength : 8,
+                                    digits : true
+                                },
+                                txtEstado : {
+                                    required : true,
+                                    digits : true,
+                                    range: [0, 1]
+                                },
+                                txtTelefono : {
+                                    maxlength : 9
+                                },
+                                txtUsuario : {
+                                	required : true,
+                                    maxlength : 8
+                                },
+                                txtNombres : {
+                                	required : true,
+                                	maxlength : 50
+                                }
+                            },
+                            messages : {
+                                txtDni : {
+                                    required : "Ingrese el DNI",
+                                    maxlength : "El DNI debe tener máximo 8 caracteres",
+                                    digits : "El DNI debe contener solo números"
+                                },
+                                txtEstado : {
+                                    required : "Ingrese el Estado (0 o 1)",
+                                    digits : "El Estado solo debe contener dígitos",
+                                    range: "El Estado solo debe ser 0 o 1"
+                                },
+                                txtTelefono : {
+                                    maxlength : "El Teléfono debe tener máximo 9 caracteres"
+                                },
+                                txtUsuario : {
+                                	required : "Este campo es requerido",
+                                    maxlength : "El Usuario debe tener máximo 8 caracteres"
+                                },
+                                txtNombres : {
+                                    required : "Ingrese el Nombre"
+                                }
+                            },
+                            submitHandler : function(form) {
+                                form.submit();
+                            }
+                        });
+    });
 </script>
 </html>
