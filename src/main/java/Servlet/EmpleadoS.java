@@ -102,6 +102,7 @@ public class EmpleadoS extends HttpServlet {
     		}
     	}
 		private void getEmpleados(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
+			
 			List<Empleado> lista = edao.listEmpleado();              
             if (lista != null) {
                 request.setAttribute("empleados", lista);
