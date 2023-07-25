@@ -15,25 +15,9 @@
 <div class="container-fuid m-4">
     <h3>Modulo Empleado</h3>
     <div class="row">
-<<<<<<< HEAD
         <div class="col-6 col-sm-3">
             <form id="formEmpleado" action="EmpleadoS" method="post">
-=======
-        <div class="col-4 col-sm-4">
-            <form name="formEmpleado" id="formEmpleado" action="EmpleadoS" method="post">
->>>>>>> 93ac0b40f72fa6cdd19ec043c570b5f2a42cec8f
-                    <div class="form-group" style="display: none;">
-                      <label>ID</label>
-                      <input type="text" name="txtId" class="form-control" value="${empleado.getId()}">
-                    </div>
-					<div class="form-group my-2">
-					<label>Seleccionar rol:</label>
-						<select class="form-control" name="rol" required disable>
-							<option value="" disabled selected> - Selecciona - </option>
-					        <option value="Administrador">Administrador</option>
-					        <option value="Vendedor">Vendedor</option>
-						</select>
-					</div>
+
                     <div class="form-group">
                         <label>Dni</label>
                         <input type="text" name="txtDni" class="form-control"value="${empleado.getDni()}"
@@ -105,11 +89,7 @@
             </form>
         </div>
 
-<<<<<<< HEAD
         <div class= "col-6 col-sm-9">
-=======
-        <div class= "col-8 col-sm-8">
->>>>>>> 93ac0b40f72fa6cdd19ec043c570b5f2a42cec8f
             <table class="table table-hover text-center" >                  
                 <thead>
                 <tr>
@@ -155,73 +135,4 @@
         </div>
     </div>  
 </body>
-<<<<<<< HEAD
-=======
-<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
-<script type="text/javascript">
-    $(function() {
-        $("form[name='formEmpleado']")
-                .validate(
-                        {
-                        	errorElement: "span", 
-                            errorClass: "text-danger", 
-                            rules : {
-                            	rol: {
-                                    required: true
-                                },	
-                                txtDni : {
-                                    required : true,
-                                    maxlength : 8,
-                                    digits : true
-                                },
-                                txtEstado : {
-                                    required : true,
-                                    digits : true,
-                                    range: [0, 1]
-                                },
-                                txtTelefono : {
-                                    maxlength : 9
-                                },
-                                txtUsuario : {
-                                	required : true,
-                                    maxlength : 8
-                                },
-                                txtNombres : {
-                                	required : true,
-                                	maxlength : 50
-                                }
-                            },
-                            messages : {
-                            	rol : {
-                            		required : "Selecciona un rol"
-                            	},
-                                txtDni : {
-                                    required : "Ingrese el DNI",
-                                    maxlength : "El DNI debe tener máximo 8 caracteres",
-                                    digits : "El DNI debe contener solo números"
-                                },
-                                txtEstado : {
-                                    required : "Ingrese el Estado (0 o 1)",
-                                    digits : "El Estado solo debe contener dígitos",
-                                    range: "El Estado solo debe ser 0 o 1"
-                                },
-                                txtTelefono : {
-                                    maxlength : "El Teléfono debe tener máximo 9 caracteres"
-                                },
-                                txtUsuario : {
-                                	required : "Este campo es requerido",
-                                    maxlength : "El Usuario debe tener máximo 8 caracteres"
-                                },
-                                txtNombres : {
-                                    required : "Ingrese el Nombre"
-                                }
-                            },
-                            submitHandler : function(form) {
-                                form.submit();
-                            }
-                        });
-    });
-</script>
->>>>>>> 93ac0b40f72fa6cdd19ec043c570b5f2a42cec8f
 </html>

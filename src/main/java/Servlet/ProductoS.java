@@ -145,24 +145,7 @@ public class ProductoS extends HttpServlet {
 	        request.getRequestDispatcher("Producto.jsp").forward(request, response);
 	    }
 	}
-	private void getProductos2(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	    // Obtén el contexto de la aplicación (ServletContext)
-	    ServletContext context = getServletContext();
-
-	    // Crea una instancia del servicio de productos
-	    ProductoServicio productoServicio = new ProductoServicio();
-
-	    // Llama al método listProducto() y pasa el contexto como argumento
-	    List<Producto> lista = productoServicio.listProducto(context);
-
-	    if (lista != null) {
-	        request.setAttribute("productos", lista);
-	        request.getRequestDispatcher("Producto2.jsp").forward(request, response);
-	    } else {
-	        request.setAttribute("mensaje", "Error al listar");
-	        request.getRequestDispatcher("Producto2.jsp").forward(request, response);
-	    }
-	}
+		
 	private void getProducto(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String code = request.getParameter("code");

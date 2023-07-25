@@ -56,13 +56,8 @@
 		</div>
 	</nav>
 </div>
-<<<<<<< HEAD
 
 <div style="height: 600px">
-=======
-<br>
-<div style="height: 650px">
->>>>>>> 93ac0b40f72fa6cdd19ec043c570b5f2a42cec8f
 	<iframe class="w-100 h-100" name="myFrame"></iframe>
 </div>
 </body>

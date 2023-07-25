@@ -50,15 +50,13 @@ public class EmpleadoS extends HttpServlet {
 }  	
     	private void addEmpleado(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     		
-    		String rol = request.getParameter("rol");
+    		
     		String dni = request.getParameter("txtDni");
     		String nom = request.getParameter("txtNombres");
     		String tef = request.getParameter("txtTelefono");
     		String est = request.getParameter("txtEstado");
     		String user = request.getParameter("txtUsuario");
-<<<<<<< HEAD
     		String rol = request.getParameter("txtRol");
-=======
 
     		em.setRol(rol);
     		em.setDni(dni);
@@ -68,7 +66,7 @@ public class EmpleadoS extends HttpServlet {
     		em.setUser(user);    		
     		   
     		int value = edao.addEmpleado(em);
->>>>>>> 93ac0b40f72fa6cdd19ec043c570b5f2a42cec8f
+
     		
     		if (dni.isEmpty() || nom.isEmpty() || tef.isEmpty() || est.isEmpty() || user.isEmpty() || rol.isEmpty()) {
     	        request.setAttribute("error", "Debe llenar todos los campos.");
@@ -92,7 +90,7 @@ public class EmpleadoS extends HttpServlet {
     	private void updateEmpleado(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	
     		int code = Integer.parseInt (request.getParameter("txtId"));
-    		String rol = request.getParameter("rol");
+    		
     		String dni = request.getParameter("txtDni");
     		String nom = request.getParameter("txtNombres");
     		String tef = request.getParameter("txtTelefono");
@@ -100,7 +98,7 @@ public class EmpleadoS extends HttpServlet {
     		String user = request.getParameter("txtUsuario");
     		String rol = request.getParameter("txtRol");
     		
-<<<<<<< HEAD
+
     		if (dni.isEmpty() || nom.isEmpty() || tef.isEmpty() || user.isEmpty() ||est.isEmpty())  {
     	        request.setAttribute("error", "Debe llenar todos los campos.");
     	        getEmpleados(request, response);
@@ -113,7 +111,7 @@ public class EmpleadoS extends HttpServlet {
 	    		em.setEstado(est);
 	    		em.setUser(user);
 	    		em.setRol(rol);
-=======
+
     		em.setId((code));
     		em.setRol(rol);
     		em.setDni(dni);
@@ -121,7 +119,7 @@ public class EmpleadoS extends HttpServlet {
     		em.setTel(tef);
     		em.setEstado(est);
     		em.setUser(user);
->>>>>>> 93ac0b40f72fa6cdd19ec043c570b5f2a42cec8f
+
     		
    		
     		int value = edao.updateEmpleado(em);;
