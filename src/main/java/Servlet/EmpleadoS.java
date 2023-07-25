@@ -56,17 +56,7 @@ public class EmpleadoS extends HttpServlet {
     		String tef = request.getParameter("txtTelefono");
     		String est = request.getParameter("txtEstado");
     		String user = request.getParameter("txtUsuario");
-    		String rol = request.getParameter("txtRol");
-
-    		em.setRol(rol);
-    		em.setDni(dni);
-    		em.setNom(nom);
-    		em.setTel(tef);
-    		em.setEstado(est);
-    		em.setUser(user);    		
-    		   
-    		int value = edao.addEmpleado(em);
-
+    		String rol = request.getParameter("txtRol");  
     		
     		if (dni.isEmpty() || nom.isEmpty() || tef.isEmpty() || est.isEmpty() || user.isEmpty() || rol.isEmpty()) {
     	        request.setAttribute("error", "Debe llenar todos los campos.");
@@ -110,17 +100,7 @@ public class EmpleadoS extends HttpServlet {
 	    		em.setTel(tef);
 	    		em.setEstado(est);
 	    		em.setUser(user);
-	    		em.setRol(rol);
-
-    		em.setId((code));
-    		em.setRol(rol);
-    		em.setDni(dni);
-    		em.setNom(nom);
-    		em.setTel(tef);
-    		em.setEstado(est);
-    		em.setUser(user);
-
-    		
+	    		em.setRol(rol);		
    		
     		int value = edao.updateEmpleado(em);;
     		
