@@ -16,7 +16,11 @@
 
 
 <div class="container-fuid m-4">
+<<<<<<< HEAD
 		<h3>Lista de productos</h3>
+=======
+		<h1>Lista de productos</h1>
+>>>>>>> 93ac0b40f72fa6cdd19ec043c570b5f2a42cec8f
 		<div class="">
 			
 			<div class="">
@@ -62,4 +66,66 @@
 	</div>
 
 </body>
+<<<<<<< HEAD
+=======
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+<script type="text/javascript">
+    $(function() {
+        $("form[name='formProducto']").validate({
+            errorElement: "span", 
+            errorClass: "text-danger", 
+            rules: {
+                txtCodigo: {
+                    required: true,
+                    maxlength: 8
+                },
+                txtNombre: {
+                    required: true
+                },
+                txtPrecio: {
+                    required: true,
+                    number: true
+                },
+                txtEstado: {
+                    required: true,
+                    digits: true,
+                    maxlength: 1
+                },
+                txtStock: {
+                    required: true,
+                    digits: true,
+                    maxlength: 9
+                },
+            },
+            messages: {
+                txtCodigo: {
+                    required: "Ingrese el código del producto",
+                    maxlength: "El código debe tener máximo 8 caracteres"
+                },
+                txtNombre: {
+                    required: "Ingrese el nombre del producto"
+                },
+                txtPrecio: {
+                    required: "Ingrese el precio del producto",
+                    number: "Ingrese un valor numérico"
+                },
+                txtEstado: {
+                    required: "Ingrese un valor (0 o 1)",
+                    digits: "Ingrese solo números",
+                    maxlength: "Ingrese máximo 1 número"
+                },
+                txtStock: {
+                    required: "Ingrese la cantidad del producto",
+                    digits: "Ingrese solo números",
+                    maxlength: "Ingrese máximo 9 números"
+                },
+            },
+            submitHandler: function(form) {
+                form.submit();
+            }
+        });
+    });
+</script>
+>>>>>>> 93ac0b40f72fa6cdd19ec043c570b5f2a42cec8f
 </html>

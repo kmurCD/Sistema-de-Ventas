@@ -27,8 +27,9 @@ public class EmpleadoServicio implements EmpleadoInterface {
 
 					while(rs.next()) {
 						
-					Empleado em = new Empleado();			
+					Empleado em = new Empleado();
 					em.setId(rs.getInt ("IdEmpleado"));
+					em.setRol(rs.getString("rol"));
 					em.setDni(rs.getString("Dni"));
 					em.setNom(rs.getString("Nombres"));
 					em.setTel(rs.getString("Telefono"));
@@ -60,6 +61,7 @@ public class EmpleadoServicio implements EmpleadoInterface {
 		    Connection cn = null;		
 		   try {
 		        cn = Conexion.getConnection();
+<<<<<<< HEAD
 		        String query = "insert into empleado(Dni, Nombres, Telefono, Estado, User,Rol) values (?,?,?,?,?,?)";
 		        		
 		        psmt = cn.prepareStatement(query);
@@ -69,6 +71,17 @@ public class EmpleadoServicio implements EmpleadoInterface {
 		        psmt.setString(4, em.getEstado());
 		        psmt.setString(5, em.getUser());
 		        psmt.setString(6, em.getRol());
+=======
+		        String query = "insert into empleado(rol, Dni, Nombres, Telefono, Estado, User) values (?,?,?,?,?)";
+		        		
+		        psmt = cn.prepareStatement(query);
+		        psmt.setString(1, em.getRol());
+		        psmt.setString(2, em.getDni());
+		        psmt.setString(3, em.getNom());
+		        psmt.setString(4, em.getTel());
+		        psmt.setString(5, em.getEstado());
+		        psmt.setString(6, em.getUser());			       
+>>>>>>> 93ac0b40f72fa6cdd19ec043c570b5f2a42cec8f
 		        value = psmt.executeUpdate();
 		        
 		        System.out.println("Se agrego un dato");
@@ -92,6 +105,7 @@ public class EmpleadoServicio implements EmpleadoInterface {
 		    Connection cn = null;		
 		   try {
 			   	cn = Conexion.getConnection();
+<<<<<<< HEAD
 			   	String query;
 		        
 		        if (em.getRol() == null) {
@@ -116,6 +130,18 @@ public class EmpleadoServicio implements EmpleadoInterface {
 		        	psmt.setInt(6, em.getId());;
 		        }
 		        
+=======
+		        String query = "UPDATE empleado set rol=?, Dni=?, Nombres=?, Telefono=?,Estado=?,User=? WHERE IdEmpleado=?";
+		      	        		
+		        psmt = cn.prepareStatement(query);
+		        psmt.setString(1, em.getRol());
+		        psmt.setString(2, em.getDni());
+		        psmt.setString(3, em.getNom());
+		        psmt.setString(4, em.getTel());
+		        psmt.setString(5, em.getEstado());
+		        psmt.setString(6, em.getUser());
+		        psmt.setInt(7, em.getId());
+>>>>>>> 93ac0b40f72fa6cdd19ec043c570b5f2a42cec8f
 		        value = psmt.executeUpdate();
 		        System.out.println("Se actualizo un dato");
 		    } catch (Exception e) {
@@ -148,12 +174,21 @@ public class EmpleadoServicio implements EmpleadoInterface {
 					while(rs.next()) {							
 					em= new Empleado();
 					em.setId(rs.getInt(1));
+<<<<<<< HEAD
 					em.setDni(rs.getString(2));
 					em.setNom(rs.getString(3));
 					em.setTel(rs.getString(4));
 					em.setEstado(rs.getString(5));
 					em.setUser(rs.getString(6));
 					em.setRol(rs.getString(7));
+=======
+					em.setRol(rs.getString(2));
+					em.setDni(rs.getString(3));
+					em.setNom(rs.getString(4));
+					em.setTel(rs.getString(5));
+					em.setEstado(rs.getString(6));
+					em.setUser(rs.getString(7));					
+>>>>>>> 93ac0b40f72fa6cdd19ec043c570b5f2a42cec8f
 					}
 					System.out.println("Se obtuvo un dato");
 				}catch (Exception e) {

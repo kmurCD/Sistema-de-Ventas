@@ -2,6 +2,7 @@ package Modelo;
 
 public class Empleado {
  private int id;
+ private String rol;
  private String dni;
  private String nom;
  private String tel;
@@ -18,6 +19,14 @@ public int getId() {
 
 public void setId(int id) {
 	this.id = id;
+}
+
+public String getRol() {
+	return rol;
+}
+
+public void setRol(String rol) {
+	this.rol = rol;
 }
 
 public String getDni() {
