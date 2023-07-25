@@ -30,7 +30,7 @@ public class EmpleadoS extends HttpServlet {
 			case "Principal":
 				request.getRequestDispatcher("Principal.jsp").forward(request, response);
 				break;
-		 	case "Agregar":
+		 	case "Enviar Datos":
 				String codigo = request.getParameter("txtId");			
 			if(codigo != null && !codigo.isEmpty()){
 				updateEmpleado (request,response);}
@@ -55,23 +55,26 @@ public class EmpleadoS extends HttpServlet {
     		String tef = request.getParameter("txtTelefono");
     		String est = request.getParameter("txtEstado");
     		String user = request.getParameter("txtUsuario");
-
-    		em.setDni(dni);
-    		em.setNom(nom);
-    		em.setTel(tef);
-    		em.setEstado(est);
-    		em.setUser(user);    		
-    		   
-    		int value = edao.addEmpleado(em);
+    		String rol = request.getParameter("txtRol");
     		
-    		if (value == 1) {
-    			System.out.println("ok addEmpleado");
-    			getEmpleados(request,response);    			
-    		}else {    	
-    			System.out.println("Error addEmpleado");
-    			request.getRequestDispatcher("Empleado.jsp").forward(request, response);
-    		}   		
-  		
+    		if (dni.isEmpty() || nom.isEmpty() || tef.isEmpty() || est.isEmpty() || user.isEmpty() || rol.isEmpty()) {
+    	        request.setAttribute("error", "Debe llenar todos los campos.");
+    		} else {
+    	        try {    
+	    		em.setDni(dni);
+	    		em.setNom(nom);
+	    		em.setTel(tef);
+	    		em.setEstado(est);
+	    		em.setUser(user);    		
+	    		em.setRol(rol);
+	    		
+	    		edao.addEmpleado(em);
+	    		request.setAttribute("mensaje", "Empleado agregado con éxito.");
+    	        } catch (Exception e) {
+    	            request.setAttribute("error", "Error al agregar.");
+    	        }
+    	    }
+    		getEmpleados(request, response);
     	}
     	private void updateEmpleado(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	
@@ -81,22 +84,30 @@ public class EmpleadoS extends HttpServlet {
     		String tef = request.getParameter("txtTelefono");
     		String est = request.getParameter("txtEstado");
     		String user = request.getParameter("txtUsuario");
+    		String rol = request.getParameter("txtRol");
     		
-    		em.setId((code));		
-    		em.setDni(dni);
-    		em.setNom(nom);
-    		em.setTel(tef);
-    		em.setEstado(est);
-    		em.setUser(user);
+    		if (dni.isEmpty() || nom.isEmpty() || tef.isEmpty() || user.isEmpty() ||est.isEmpty())  {
+    	        request.setAttribute("error", "Debe llenar todos los campos.");
+    	        getEmpleados(request, response);
+    	        return; 
+    	    }  
+	    		em.setId((code));		
+	    		em.setDni(dni);
+	    		em.setNom(nom);
+	    		em.setTel(tef);
+	    		em.setEstado(est);
+	    		em.setUser(user);
+	    		em.setRol(rol);
     		
    		
     		int value = edao.updateEmpleado(em);;
     		
     		if (value == 1) {
+    			 request.setAttribute("mensaje","Empleado actualizado con éxito");
     			getEmpleados(request,response);
     		}else {
-    			request.setAttribute("mensaje", "Error al Actualizar ");
-    			request.getRequestDispatcher("Customer.jsp").forward(request, response);
+    			request.setAttribute("error", "Error al actualizar el empleado");
+    			getEmpleados(request, response);
     		}
     	}
 		private void getEmpleados(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
@@ -105,8 +116,7 @@ public class EmpleadoS extends HttpServlet {
             if (lista != null) {
                 request.setAttribute("empleados", lista);
         		request.getRequestDispatcher("Empleado.jsp").forward(request, response);  		
-            } else {
-                request.setAttribute("mensaje", "Error al listar");
+            } else {               
                 request.getRequestDispatcher("Empleado.jsp").forward(request, response);
             }
 		}
@@ -129,14 +139,17 @@ public class EmpleadoS extends HttpServlet {
 		    int value = edao.deleteEmpleado(code);		    
 		    
 		    if (value == 1) {
+		    	request.setAttribute("mensaje", "Empleado eliminado con éxito");
 		        getEmpleados(request, response);		        
 		    } else {
 		        request.setAttribute("mensaje", "Error al eliminar el empleado");
 		        request.getRequestDispatcher("Principal.jsp").forward(request, response);
 		    }
 		}
-		private void limpiarEmpleado(HttpServletRequest request, HttpServletResponse response){
-			// TODO Auto-generated method stub
+		private void limpiarEmpleado(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+			Empleado e = new Empleado () ;
+			request.setAttribute("empleado", e);
+			getEmpleados(request, response);	
 			}	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub

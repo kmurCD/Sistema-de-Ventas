@@ -7,7 +7,7 @@ public class Empleado {
  private String tel;
  private String estado;
  private String user;
- 
+ private String rol;
  public Empleado() {
 		
  }
@@ -58,6 +58,14 @@ public String getUser() {
 
 public void setUser(String user) {
 	this.user = user;
+}
+
+public String getRol() {
+	return rol;
+}
+
+public void setRol(String rol) {
+	this.rol = rol;
 }
  
  

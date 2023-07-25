@@ -116,7 +116,14 @@ public class ProductoServicio implements ProductoInterface {
 	    Connection cn = null;		
 	   try {
 		   	cn = Conexion.getConnection();
-	        String query = "UPDATE producto set Nombres=?, Precio=?, Stock=?,Estado=?,Codigo=?, Imagen=? WHERE IdProducto=?";
+		    String query;
+		    
+	        if (p.getImagen() == null) {
+	            query = "UPDATE producto SET Nombres=?, Precio=?, Stock=?, Estado=?, Codigo=? WHERE IdProducto=?";
+	        } else {
+	            query = "UPDATE producto SET Nombres=?, Precio=?, Stock=?, Estado=?, Codigo=?, Imagen=? WHERE IdProducto=?";
+	        }
+	        
 	      	        		
 	        psmt = cn.prepareStatement(query);
 	        psmt.setString(1, p.getNombre());
@@ -124,8 +131,15 @@ public class ProductoServicio implements ProductoInterface {
 	        psmt.setInt(3, p.getStock());
 	        psmt.setString(4, p.getEstado());
 	        psmt.setInt(5, p.getCodigo());
-	        psmt.setBytes(6, p.getImagen());
-	        psmt.setInt(6, p.getId());
+	        
+	        if (p.getImagen() != null) {
+	            psmt.setBytes(6, p.getImagen());
+	            psmt.setInt(7, p.getId());
+	        } else {
+	            psmt.setInt(6, p.getId());
+	        }
+	       
+	        
 	        value = psmt.executeUpdate();
 	        System.out.println("Se actualizo un dato");
 	    } catch (Exception e) {
