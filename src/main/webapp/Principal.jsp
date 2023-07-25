@@ -57,7 +57,7 @@
 	</nav>
 </div>
 <br>
-<div style="height: 600px">
+<div style="height: 650px">
 	<iframe class="w-100 h-100" name="myFrame"></iframe>
 </div>
 </body>

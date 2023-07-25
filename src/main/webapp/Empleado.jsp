@@ -15,12 +15,20 @@
 <div class="container-fuid m-4">
     <h1>Modulo Empleado</h1>
     <div class="row">
-        <div class="col-6 col-sm-4">
+        <div class="col-4 col-sm-4">
             <form name="formEmpleado" id="formEmpleado" action="EmpleadoS" method="post">
                     <div class="form-group" style="display: none;">
                       <label>ID</label>
                       <input type="text" name="txtId" class="form-control" value="${empleado.getId()}">
-                    </div>          
+                    </div>
+					<div class="form-group my-2">
+					<label>Seleccionar rol:</label>
+						<select class="form-control" name="rol" required disable>
+							<option value="" disabled selected> - Selecciona - </option>
+					        <option value="Administrador">Administrador</option>
+					        <option value="Vendedor">Vendedor</option>
+						</select>
+					</div>
                     <div class="form-group">
                         <label>Dni</label>
                         <input type="text" name="txtDni" id="txDni" class="form-control" value="${empleado.getDni()}">
@@ -54,11 +62,11 @@
             </form>
         </div>
 
-        <div class= "col-6 col-sm-8">
+        <div class= "col-8 col-sm-8">
             <table class="table table-hover text-center" >                  
                 <thead>
                 <tr>
-                    <th>ID</th>
+                	<th>ROL</th>
                     <th>DNI</th>
                     <th>NOMBRES</th>
                     <th>TELEFONO</th>
@@ -74,7 +82,7 @@
                         for (Empleado em : listemp) {                                    
                     %>
                     <tr>
-                        <td><%= em.getId() %></td>
+                    	<td><%= em.getRol() %></td>
                         <td><%= em.getDni() %></td>
                         <td><%= em.getNom() %></td>
                         <td><%= em.getTel() %></td>
@@ -108,6 +116,9 @@
                         	errorElement: "span", 
                             errorClass: "text-danger", 
                             rules : {
+                            	rol: {
+                                    required: true
+                                },	
                                 txtDni : {
                                     required : true,
                                     maxlength : 8,
@@ -131,6 +142,9 @@
                                 }
                             },
                             messages : {
+                            	rol : {
+                            		required : "Selecciona un rol"
+                            	},
                                 txtDni : {
                                     required : "Ingrese el DNI",
                                     maxlength : "El DNI debe tener máximo 8 caracteres",

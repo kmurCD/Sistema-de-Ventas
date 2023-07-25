@@ -32,7 +32,7 @@
 							<option value="" disabled selected> - Selecciona - </option>
 					        <option value="Administrador">Administrador</option>
 					        <option value="Vendedor">Vendedor</option>
-											</select>
+						</select>
 					</div>
 					<div class="form-group my-2">
 						<label>Usuario:</label> <input type="text" name="txtuser"

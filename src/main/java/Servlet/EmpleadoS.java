@@ -49,13 +49,15 @@ public class EmpleadoS extends HttpServlet {
 			}
 }  	
     	private void addEmpleado(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    		   		
+    		
+    		String rol = request.getParameter("rol");
     		String dni = request.getParameter("txtDni");
     		String nom = request.getParameter("txtNombres");
     		String tef = request.getParameter("txtTelefono");
     		String est = request.getParameter("txtEstado");
     		String user = request.getParameter("txtUsuario");
 
+    		em.setRol(rol);
     		em.setDni(dni);
     		em.setNom(nom);
     		em.setTel(tef);
@@ -75,14 +77,16 @@ public class EmpleadoS extends HttpServlet {
     	}
     	private void updateEmpleado(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	
-    		int code = Integer.parseInt (request.getParameter("txtId"));		
+    		int code = Integer.parseInt (request.getParameter("txtId"));
+    		String rol = request.getParameter("rol");
     		String dni = request.getParameter("txtDni");
     		String nom = request.getParameter("txtNombres");
     		String tef = request.getParameter("txtTelefono");
     		String est = request.getParameter("txtEstado");
     		String user = request.getParameter("txtUsuario");
     		
-    		em.setId((code));		
+    		em.setId((code));
+    		em.setRol(rol);
     		em.setDni(dni);
     		em.setNom(nom);
     		em.setTel(tef);

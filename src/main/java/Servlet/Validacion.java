@@ -25,23 +25,33 @@ public class Validacion extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String accion = request.getParameter("accion");
+ // ... (código anterior) ...
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String accion = request.getParameter("accion");
         if (accion.equalsIgnoreCase("Ingresar")) {
+            String rol = request.getParameter("rol");
             String user = request.getParameter("txtuser");
             String pass = request.getParameter("txtpass");
             em = edao.Validacion(user, pass);
-            
-            if (em.getUser() != null) { 
-            	request.setAttribute("usuario",em);
-                request.getRequestDispatcher("EmpleadoS?menu=Principal").forward(request, response);
+
+            if (em.getUser() != null) {
+                request.setAttribute("usuario", em);
+                if (rol.equalsIgnoreCase("Administrador")) {
+                    request.getRequestDispatcher("EmpleadoS?menu=Principal").forward(request, response);
+                } else if (rol.equalsIgnoreCase("Vendedor")) {
+                    request.getRequestDispatcher("Principal2.jsp").forward(request, response);
+                } else {
+                    request.getRequestDispatcher("Index.jsp").forward(request, response);
+                }
                 System.out.println("Conexión de validacion OK");
             } else {
                 request.getRequestDispatcher("Index.jsp").forward(request, response);
             }
         } else {
             request.getRequestDispatcher("Index.jsp").forward(request, response);
-        }				
-	}
+        }
+    }
+
 
 }
