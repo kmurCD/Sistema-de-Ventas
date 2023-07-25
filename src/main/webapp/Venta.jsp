@@ -71,11 +71,15 @@
   	</div>
   		<div class="col-sm-7">
   			<div class="card">
-  				<div class="card-body">	  				
-					  <div class=" col-sm-6 d-flex ml-auto ">
+  				<div class="card-body">
+  					<div class="d-flex">
+  					<div class=" col-sm-8"></div>	   								
+					  <div class=" col-sm-4 d-flex">
 					    <label>NRO SERIE</label>
 					    <input type="text" name="NroSerie" class="form-control">				 
+					</div>					
 					</div>
+					<br>
 	  				<div>
 	  					<table class="table table-hover text-center" >					
 							<thead>
@@ -106,6 +110,11 @@
 							</tbody>		
 						 </table>
 	  				</div>
+	  				<div class="card-footer"></div>
+	  					<div>
+							<input type="submit" name="accion" value="Generar Venta" class="btn btn-success">
+							<input type="submit" name="accion" value="Cancelar" class="btn btn-danger">
+	  					</div>
   				</div>
   			</div>	
   		</div>

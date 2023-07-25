@@ -3,21 +3,23 @@ package Modelo;
 public class Producto {
 
 	private int id;
-	private String codigo;
+	private int codigo;
 	private String nombre;
 	private Double precio;
-	private int cantidad;
-	private String imagen;
+	private int Stock;
+	private String estado;
+	private byte[] imagen;
+	
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getCodigo() {
+	public int getCodigo() {
 		return codigo;
 	}
-	public void setCodigo(String codigo) {
+	public void setCodigo(int codigo) {
 		this.codigo = codigo;
 	}
 	public String getNombre() {
@@ -32,21 +34,23 @@ public class Producto {
 	public void setPrecio(Double precio) {
 		this.precio = precio;
 	}
-	public int getCantidad() {
-		return cantidad;
-	}
-	public void setCantidad(int cantidad) {
-		this.cantidad = cantidad;
-	}
-	public String getImagen() {
+	public byte[] getImagen() {
 		return imagen;
 	}
-	public void setImagen(String imagen) {
+	public void setImagen(byte[] imagen) {
 		this.imagen = imagen;
 	}
-	
-	public Double importeTotal() {
-		return this.precio * this.cantidad;
+	public String getEstado() {
+		return estado;
+	}
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+	public int getStock() {
+		return Stock;
+	}
+	public void setStock(int stock) {
+		Stock = stock;
 	}
 	
 }

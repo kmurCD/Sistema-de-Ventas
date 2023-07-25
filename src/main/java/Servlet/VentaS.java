@@ -7,9 +7,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-/**
- * Servlet implementation class VentaS
- */
+
+@WebServlet(name = "VentaS", urlPatterns = {"/VentaS"})
+
 public class VentaS extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

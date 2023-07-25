@@ -1,19 +1,17 @@
 package Servlet;
 
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
-
 import Factory.DAOFactory;
 import Interface.EmpleadoInterface;
 import Modelo.Empleado;
 
-/**
- * Servlet implementation class EmpleadoS
- */
+@WebServlet(name = "EmpleadoS", urlPatterns = {"/EmpleadoS"})
 public class EmpleadoS extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 		DAOFactory daoFactory = DAOFactory.getDaoFactory(DAOFactory.MYSQL);

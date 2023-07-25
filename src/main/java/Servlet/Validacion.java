@@ -1,6 +1,7 @@
 package Servlet;
 
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -10,7 +11,7 @@ import Factory.DAOFactory;
 import Interface.EmpleadoInterface;
 import Modelo.Empleado;
 
-
+@WebServlet(name = "Validacion", urlPatterns = {"/Validacion"})
 public class Validacion extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 			DAOFactory daoFactory = DAOFactory.getDaoFactory(DAOFactory.MYSQL);

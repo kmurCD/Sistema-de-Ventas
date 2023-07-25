@@ -9,6 +9,7 @@
 <title>Registro Productos</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
 </head>
 <body>
@@ -18,34 +19,39 @@
 		<h1>Registrar Producto</h1>
 		<div class="row">
 			<div class="col-6 col-sm-4">
-				<form action="ProductoServlet?type=registrar" method="post">
-					<input class="form-control" type="text" style="display: none"
-							name="txtId" readonly="readonly" value="${producto.id}"/>
-					<div class="form-group">
+				<form action="ProductoS" method="post" enctype="multipart/form-data">
+					<div class="form-group" >
+					<label>ID</label>
+					<input class="form-control" type="text"  name="txtId"  value="${producto.getId()}"/>
+						</div>
+					<div class="form-group">		
 						<label>Codigo</label> <input class="form-control" type="text"
-							name="txtCodigo" value="${producto.codigo}"/>
+							name="txtCodigo" value="${producto.getCodigo()}"/>
 					</div>
 					<div class="form-group">
 						<label>Nombre</label> <input class="form-control" type="text"
-							name="txtNombre" value="${producto.nombre}"/>
+							name="txtNombre" value="${producto.getNombre()}"/>
 					</div>
 					<div class="form-group">
 						<label>Precio</label> <input class="form-control" type="text"
-							name="txtPrecio" value="${producto.precio}" />
+							name="txtPrecio" value="${producto.getPrecio()}" />
+					</div>
+					<div class="form-group">
+						<label>Estado</label> <input class="form-control" type="text"
+							name="txtEstado" value="${producto.getEstado()}" />
 					</div>
 					<div class="form-group">
 						<label>Cantidad</label> <input class="form-control" type="text"
-							name="txtCantidad" value="${producto.cantidad}" />
+							name="txtStock" value="${producto.getStock()}" />
 					</div>
 					<div class="form-group">
-						<label>Imagen</label> <input class="form-control" type="text"
-							name="txtImagen" value="${product.imagen}"/>
+						<label>Imagen</label> <input class="form-control" type="file"
+							name="txtImagen" value="${producto.getImagen()}"/>
 					</div>
 					<div class="form-group my-3 text-center">
-					<input class="btn btn-info text-white" type="submit"
-						value="Enviar datos" />
+					<input class="btn btn-info text-white" type="submit" name="menu" value="Agregar" />	
+														
 					
-					<a class="btn btn-info text-white" href="ProductoServlet?type=nuevo">Nuevo Registro</a>
 					</div>
 				</form>
 			</div>
@@ -58,14 +64,14 @@
 							<th>Nombre</th>
 							<th>Precio</th>
 							<th>Catidad</th>
-							<th>Total</th>
+							<th>Estado</th>
 							<th>Imagen</th>
 							<th>Acciones</th>
 						</tr>
 					</thead>
 					<tbody>
 						<%
-						List<Producto> producto = (List<Producto>) request.getAttribute("producto");
+						List<Producto> producto = (List<Producto>) request.getAttribute("productos");
 						if (producto != null) {
 							for (Producto p : producto) {
 						%>
@@ -74,13 +80,12 @@
 							<td><%=p.getCodigo()%></td>
 							<td><%=p.getNombre()%></td>
 							<td><%=p.getPrecio()%></td>
-							<td><%=p.getCantidad()%></td>
-							<td><%=p.importeTotal()%></td>
+							<td><%=p.getStock()%></td>
+							<td><%=p.getEstado()%></td>														
 							<td><img width="40px" alt="" src="<%=p.getImagen()%>"></td>
-							<td><a href="ProductoServlet?type=editar&codigo=<%=p.getId()%>" style="margin-right: 8px">
-								<img width="20px" src="img/lapiz.png"></a> 
-								<a href="ProductServlet?type=eliminar&codigo=<%=p.getId()%>">
-								<img width="20px" src="img/boton-x.png"></a>
+							<td>
+                           <a href="ProductoS?menu=Editar&code=<%= p.getId() %>" class="bi bi-pencil-square" style="color: #0dcaf0;"></a>
+                           <a href="ProductoS?menu=Eliminar&code=<%= p.getId() %>"class="bi bi-trash3-fill" style="color: #0dcaf0;"></a>
 							</td>
 						</tr>
 						<%

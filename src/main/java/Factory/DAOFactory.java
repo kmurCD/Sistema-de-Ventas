@@ -1,6 +1,9 @@
 package Factory;
 
+import Interface.ClienteInterface;
 import Interface.EmpleadoInterface;
+import Interface.ProductoInterface;
+import Interface.VentaInterface;
 public abstract class DAOFactory {
 	
 		  public static final int MYSQL = 1 ;
@@ -9,6 +12,9 @@ public abstract class DAOFactory {
 		  
 		 
 		  public abstract EmpleadoInterface getEmpleado();	
+		  public abstract ClienteInterface getCliente();	
+		  public abstract ProductoInterface getProducto();	
+		  public abstract VentaInterface getVenta();
 		  
 		  public static DAOFactory getDaoFactory (int tipo) {
 				switch (tipo) {
