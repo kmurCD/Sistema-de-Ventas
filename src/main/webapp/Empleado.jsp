@@ -105,6 +105,8 @@
         $("form[name='formEmpleado']")
                 .validate(
                         {
+                        	errorElement: "span", 
+                            errorClass: "text-danger", 
                             rules : {
                                 txtDni : {
                                     required : true,

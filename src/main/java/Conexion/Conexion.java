@@ -9,8 +9,8 @@ public class Conexion {
 	private static final String CONTROLADOR = "com.mysql.cj.jdbc.Driver";
 	private static final String URL = "jdbc:mysql://localhost:3306/bd_ventas?useSSL=false";
 	private static final String USUARIO = "root";
-	private static final String CLAVE = "96582313";
-	//private static final String CLAVE = "10203040";
+	//private static final String CLAVE = "96582313";
+	private static final String CLAVE = "10203040";
 
 	static {
 		try {

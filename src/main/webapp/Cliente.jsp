@@ -15,8 +15,8 @@
 	<h1>Módulo Clientes</h1>
 	<div class="row">
 		<div class="col-6 col-sm-4">
-			<form action="ClienteS" method="post">
-					<div class="form-group" >
+			<form name="formCliente" action="ClienteS" method="post">
+					<div class="form-group">
 					<label>Id</label>
 						<input type="text" name="txtId" class="form-control" value="${cliente.getId()}"></div>			
 					<div class="form-group">
@@ -85,4 +85,73 @@
 	</div>
 </div>
 </body>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+<script type="text/javascript">
+    $(function() {
+        $("form[name='formCliente']")
+                .validate(
+                        {
+                        	errorElement: "span", 
+                            errorClass: "text-danger", 
+                            rules : {
+                            	txtCodigo : {
+                                	required : true,
+                                	maxlength : 8,
+                                    digits : true
+                                },
+                                txtDni : {
+                                    required : true,
+                                    maxlength : 8,
+                                    digits : true
+                                },
+                                txtNombres : {
+                                    required : true
+                                },
+                                
+                                txtDireccion : {
+                                	required : true
+                                },
+                                
+                                txtEstado : {
+                                    required : true,
+                                    digits : true,
+                                    range: [0, 1]
+                                }
+                                
+                                
+                            },
+                            messages : {
+                            	txtCodigo : {
+                                	required : "Ingrese el Código",
+                                	digits : "El Código debe contener solo números"
+                                	maxlength : "El Código debe tener máximo 10 caracteres",
+                                },
+                                txtDni : {
+                                    required : "Ingrese el DNI",
+                                    maxlength : "El DNI debe tener máximo 8 caracteres",
+                                    digits : "El DNI debe contener solo dígitos"
+                                },
+                                txtNombres : {
+                                    required : "Ingrese el nombre"
+                                },
+                                
+                                txtDireccion : {
+                                	required : "Ingrese la dirección"
+                                },
+                                
+                                txtEstado : {
+                                    required : "Ingrese un valor (0 o 1)",
+                                    digits : "El estado debe ser 0 o 1",
+                                    range: "El estado debe ser 0 o 1"
+                                }
+                                
+                            },
+                            submitHandler : function(form) {
+                                form.submit();
+                            }
+                        });
+    });
+</script>
+
 </html>

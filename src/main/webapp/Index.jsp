@@ -27,6 +27,14 @@
 						<h3>Bienvenidos al Sistema</h3>
 					</div>
 					<div class="form-group my-2">
+					<label>Seleccionar rol:</label>
+						<select class="form-control" name="rol" required disable>
+							<option value="" disabled selected> - Selecciona - </option>
+					        <option value="Administrador">Administrador</option>
+					        <option value="Vendedor">Vendedor</option>
+											</select>
+					</div>
+					<div class="form-group my-2">
 						<label>Usuario:</label> <input type="text" name="txtuser"
 							id="txtuser" class="form-control">
 					</div>
@@ -43,4 +51,40 @@
 		</div>
 	</div>
 </body>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+<script type="text/javascript">
+    $(function() {
+        $("form.form").validate({
+            errorElement: "span",
+            errorClass: "text-danger",
+            rules: {
+                rol: {
+                    required: true
+                },
+                txtuser: {
+                    required: true
+                },
+                txtpass: {
+                    required: true
+                }
+            },
+            messages: {
+                rol: {
+                    required: "Selecciona un rol"
+                },
+                txtuser: {
+                    required: "Ingresa el usuario"
+                },
+                txtpass: {
+                    required: "Ingresa la contraseña"
+                }
+            },
+            submitHandler: function(form) {
+                form.submit();
+            }
+        });
+    });
+</script>
 </html>

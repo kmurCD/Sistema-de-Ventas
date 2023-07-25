@@ -1,0 +1,12 @@
+#Project
+Conexion.java
+.classpath
+
+# OSX
+.DS_Store
+
+.settings/
+.settings/org.eclipse.wst.common.project.facet.core.xml
+.settings/org.eclipse.wst.common.project.facet.core.xml
+build/classes/Conexion/Conexion.class
+src/main/java/Conexion/Conexion.java

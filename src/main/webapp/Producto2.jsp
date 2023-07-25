@@ -16,46 +16,10 @@
 
 
 <div class="container-fuid m-4">
-		<h1>Registrar Producto</h1>
-		<div class="row">
-			<div class="col-6 col-sm-4">
-				<form action="ProductoS" method="post" enctype="multipart/form-data">
-					<div class="form-group" >
-					<label>ID</label>
-					<input class="form-control" type="text"  name="txtId"  value="${producto.getId()}"/>
-						</div>
-					<div class="form-group">		
-						<label>Codigo</label> <input class="form-control" type="text"
-							name="txtCodigo" value="${producto.getCodigo()}"/>
-					</div>
-					<div class="form-group">
-						<label>Nombre</label> <input class="form-control" type="text"
-							name="txtNombre" value="${producto.getNombre()}"/>
-					</div>
-					<div class="form-group">
-						<label>Precio</label> <input class="form-control" type="text"
-							name="txtPrecio" value="${producto.getPrecio()}" />
-					</div>
-					<div class="form-group">
-						<label>Estado</label> <input class="form-control" type="text"
-							name="txtEstado" value="${producto.getEstado()}" />
-					</div>
-					<div class="form-group">
-						<label>Cantidad</label> <input class="form-control" type="text"
-							name="txtStock" value="${producto.getStock()}" />
-					</div>
-					<div class="form-group">
-						<label>Imagen</label> <input class="form-control" type="file"
-							name="txtImagen" value="${producto.getImagen()}"/>
-					</div>
-					<div class="form-group my-3 text-center">
-					<input class="btn btn-info text-white" type="submit" name="menu" value="Agregar" />	
-														
-					
-					</div>
-				</form>
-			</div>
-			<div class="col-6 col-sm-8">
+		<h1>Lista de productos</h1>
+		<div class="">
+			
+			<div class="">
 				<table class="table">
 					<thead>
 						<tr>
@@ -66,7 +30,6 @@
 							<th>Catidad</th>
 							<th>Estado</th>
 							<th>Imagen</th>
-							<th>Acciones</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -85,10 +48,7 @@
 							<td><%=p.getStock()%></td>
 							<td><%=p.getEstado()%></td>														
 							<td><img width="40px" alt="" src="data:image/jpeg;base64,<%= p.getBase64() %>"></td>
-							<td>
-                           <a href="ProductoS?menu=Editar&code=<%= p.getId() %>" class="bi bi-pencil-square" style="color: #0dcaf0;"></a>
-                           <a href="ProductoS?menu=Eliminar&code=<%= p.getId() %>"class="bi bi-trash3-fill" style="color: #0dcaf0;"></a>
-							</td>
+							
 						</tr>
 						<%
 						}
