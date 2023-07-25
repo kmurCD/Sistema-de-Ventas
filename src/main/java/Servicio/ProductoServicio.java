@@ -1,18 +1,24 @@
 package Servicio;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import Conexion.Conexion;
 import Interface.ProductoInterface;
 import Modelo.Producto;
+import jakarta.servlet.ServletContext;
 
-public class ProductoServicio implements ProductoInterface {
 
+public class ProductoServicio implements ProductoInterface {	
+	String rutaImg = "/img/nodisponible.png";
 	@Override
-	public List<Producto> listProducto() {
+	public List<Producto> listProducto(ServletContext context) {
 		
 		List<Producto> listPro = new ArrayList<Producto>();
 		PreparedStatement psmt = null;
@@ -34,7 +40,23 @@ public class ProductoServicio implements ProductoInterface {
 				p.setStock(rs.getInt("Stock"));
 				p.setEstado(rs.getString("Estado"));
 				p.setCodigo(rs.getInt("Codigo"));
-				p.setImagen (rs.getBytes("Imagen"));					
+				
+				byte[] imgBytes = rs.getBytes("Imagen");
+				if (imgBytes != null && imgBytes.length > 0) { 				
+					String img64 = Base64.getEncoder().encodeToString(imgBytes);
+					p.setBase64(img64);
+				} else {
+					String realPath = context.getRealPath(rutaImg);
+					try {
+	                    byte[] imagenBytes = Files.readAllBytes(Paths.get(realPath));                   
+	                    String imgPre64 = Base64.getEncoder().encodeToString(imagenBytes);
+	                    p.setBase64(imgPre64);
+                } catch (IOException e) {
+                   
+                    e.printStackTrace();
+                }
+			}          
+	            
 				listPro.add(p);
 				System.out.println("Listado Ok");
 				}

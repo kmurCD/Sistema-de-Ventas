@@ -1,5 +1,6 @@
 package Servlet;
 
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
@@ -16,6 +17,7 @@ import Factory.DAOFactory;
 import Interface.ProductoInterface;
 import Modelo.Empleado;
 import Modelo.Producto;
+import Servicio.ProductoServicio;
 
 @WebServlet(name = "ProductoS", urlPatterns = {"/ProductoS"})
 @MultipartConfig
@@ -117,16 +119,22 @@ public class ProductoS extends HttpServlet {
 		}
 	}
 	private void getProductos(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		List<Producto> lista = pdao.listProducto();              
-        if (lista != null) {
-            request.setAttribute("productos", lista);
-    		request.getRequestDispatcher("Producto.jsp").forward(request, response);  		
-        } else {
-            request.setAttribute("mensaje", "Error al listar");
-            request.getRequestDispatcher("Producto.jsp").forward(request, response);
-        }
-		
+	    // Obtén el contexto de la aplicación (ServletContext)
+	    ServletContext context = getServletContext();
+
+	    // Crea una instancia del servicio de productos
+	    ProductoServicio productoServicio = new ProductoServicio();
+
+	    // Llama al método listProducto() y pasa el contexto como argumento
+	    List<Producto> lista = productoServicio.listProducto(context);
+
+	    if (lista != null) {
+	        request.setAttribute("productos", lista);
+	        request.getRequestDispatcher("Producto.jsp").forward(request, response);
+	    } else {
+	        request.setAttribute("mensaje", "Error al listar");
+	        request.getRequestDispatcher("Producto.jsp").forward(request, response);
+	    }
 	}
 	private void getProducto(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		

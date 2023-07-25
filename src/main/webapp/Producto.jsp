@@ -73,7 +73,9 @@
 						<%
 						List<Producto> producto = (List<Producto>) request.getAttribute("productos");
 						if (producto != null) {
-							for (Producto p : producto) {
+							
+							for (Producto p : producto)
+							{
 						%>
 						<tr>
 							<td><%=p.getId()%></td>
@@ -82,7 +84,7 @@
 							<td><%=p.getPrecio()%></td>
 							<td><%=p.getStock()%></td>
 							<td><%=p.getEstado()%></td>														
-							<td><img width="40px" alt="" src="<%=p.getImagen()%>"></td>
+							<td><img width="40px" alt="" src="data:image/jpeg;base64,<%= p.getBase64() %>"></td>
 							<td>
                            <a href="ProductoS?menu=Editar&code=<%= p.getId() %>" class="bi bi-pencil-square" style="color: #0dcaf0;"></a>
                            <a href="ProductoS?menu=Eliminar&code=<%= p.getId() %>"class="bi bi-trash3-fill" style="color: #0dcaf0;"></a>

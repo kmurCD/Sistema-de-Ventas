@@ -9,6 +9,7 @@ public class Producto {
 	private int Stock;
 	private String estado;
 	private byte[] imagen;
+	private String Base64;
 	
 	public int getId() {
 		return id;
@@ -51,6 +52,12 @@ public class Producto {
 	}
 	public void setStock(int stock) {
 		Stock = stock;
+	}
+	public String getBase64() {
+		return Base64;
+	}
+	public void setBase64(String base64) {
+		Base64 = base64;
 	}
 	
 }
