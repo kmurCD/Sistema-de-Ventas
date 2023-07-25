@@ -28,7 +28,7 @@
 					</div>
 					<div class="form-group my-2">
 					<label>Seleccionar rol:</label>
-						<select class="form-control" name="rol" required disable>
+						<select class="form-control" name="rol" id="rol" required disable>
 							<option value="" disabled selected> - Selecciona - </option>
 					        <option value="Administrador">Administrador</option>
 					        <option value="Vendedor">Vendedor</option>
