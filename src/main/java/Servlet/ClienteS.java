@@ -1,5 +1,6 @@
 package Servlet;
 
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -10,6 +11,7 @@ import java.util.List;
 import Factory.DAOFactory;
 import Interface.ClienteInterface;
 import Modelo.Cliente;
+import Modelo.Producto;
 
 @WebServlet(name = "ClienteS", urlPatterns = {"/ClienteS"})
 public class ClienteS extends HttpServlet {
@@ -44,7 +46,9 @@ public class ClienteS extends HttpServlet {
 			case "listar":
 				getClientes(request, response); break;
 			case "limpiar":
-				limpiarCliente(request, response); break;					
+				limpiarCliente(request, response); break;
+			case "Filtro":
+				getFiltro(request, response); break;
 			default:
 				break;
 			}					
@@ -135,10 +139,13 @@ public class ClienteS extends HttpServlet {
     				
     		String code = request.getParameter("code");
 		    Cliente c = cdao.getCliente(Integer.parseInt(code));
+		   
+		    List<Cliente> lista = cdao.listFiltro(code);
 		    
 		    if (c != null) {
 		        request.setAttribute("cliente", c);
-		        getClientes(request, response);
+		        request.setAttribute("clientes", lista);
+		        request.getRequestDispatcher("Cliente.jsp").forward(request, response);
 		    } else {
 		    	request.setAttribute("mensaje", "Error al obtener cliente");
 		        request.getRequestDispatcher("Cliente.jsp").forward(request, response);
@@ -165,7 +172,25 @@ public class ClienteS extends HttpServlet {
 		request.setAttribute("cliente", c);
 		getClientes(request, response);	
 	}
+	
+	private void getFiltro(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		   
+		String b = request.getParameter("txtBuscar");
+	    if (b != null && !b.isEmpty()) {	 	    	
+	        List<Cliente> lista = cdao.listFiltro(b );
 
+	        if (lista != null) {
+	            request.setAttribute("clientes", lista);
+	            request.getRequestDispatcher("Cliente.jsp").forward(request, response);
+	        } else {
+	        	getClientes(request, response);
+	            request.setAttribute("mensaje", "Error al listar");
+	        }
+	    } else {	    	
+	        request.setAttribute("error", "Ingrese un código o nombre para buscar.");
+	        getClientes(request, response);
+	    }
+	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.getWriter().append("Served at: ").append(request.getContextPath());

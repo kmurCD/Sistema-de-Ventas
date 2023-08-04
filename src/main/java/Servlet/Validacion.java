@@ -40,9 +40,9 @@ public class Validacion extends HttpServlet {
 	            request.setAttribute("usuario", em);
 	
 	            if ("Administrador".equalsIgnoreCase(rol)) {
-	                request.getRequestDispatcher("Principal.jsp").forward(request, response);
+	                request.getRequestDispatcher("PrincipalAdmin.jsp").forward(request, response);
 	            } else if ("Vendedor".equalsIgnoreCase(rol)) {
-	                request.getRequestDispatcher("Principal2.jsp").forward(request, response);
+	                request.getRequestDispatcher("PrincipalVendedor.jsp").forward(request, response);
 	            } else {
 	                request.setAttribute("error", "Usuario sin Permisos");
 	                request.getRequestDispatcher("Index.jsp").forward(request, response);

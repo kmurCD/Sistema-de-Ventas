@@ -1,5 +1,6 @@
 package Servicio;
 
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,6 +9,7 @@ import java.util.List;
 import Conexion.Conexion;
 import Interface.ClienteInterface;
 import Modelo.Cliente;
+
 
 
 public class ClienteServicio implements ClienteInterface {
@@ -131,7 +133,7 @@ public class ClienteServicio implements ClienteInterface {
 		try {
 
 			cn = Conexion.getConnection();
-				String query = "SELECT * FROM cliente where IdCliente="+id;
+				String query = "SELECT * FROM cliente where Codigo="+id;
 				
 				psmt = cn.prepareStatement(query);								
 				rs = psmt.executeQuery();									
@@ -158,6 +160,62 @@ public class ClienteServicio implements ClienteInterface {
 	        	}
 			}		
 	    return c;
+	}
+	@Override
+	public List<Cliente> listFiltro ( String buscar) {
+		
+		List<Cliente> listPro = new ArrayList<Cliente>();
+		PreparedStatement psmt = null;
+		Connection cn = null;
+		ResultSet rs = null;
+		try {
+
+			cn =Conexion.getConnection();
+			
+			boolean isNumeric = buscar.matches("\\d+");
+				String query;
+			  if (isNumeric) {
+		        
+		            int code = Integer.parseInt(buscar);
+		            query = "SELECT * FROM cliente WHERE Codigo=?";
+		            psmt = cn.prepareStatement(query);
+		            psmt.setInt(1, code);
+		        } else {
+		          
+		            query = "SELECT * FROM cliente WHERE Nombres LIKE ?";
+		            psmt = cn.prepareStatement(query);
+		            psmt.setString(1, "%" + buscar + "%");
+		        }
+			  
+				rs = psmt.executeQuery();
+
+				while(rs.next()) {
+					
+					Cliente c = new Cliente();	
+				
+				c.setId(rs.getInt ("IdCliente"));
+				c.setDni(rs.getString("Dni"));
+				c.setNom(rs.getString("Nombres"));
+				c.setDir(rs.getString("Direccion"));
+				c.setEstado(rs.getString("Estado"));
+				c.setCodigo(rs.getInt("Codigo"));								
+	            
+				listPro.add(c);
+				System.out.println("Listado Ok");
+				}
+			}catch (Exception e) {
+			e.printStackTrace();
+				}
+		finally {
+	        try {
+	            if (rs != null) rs.close();
+	            if (psmt != null) psmt.close();
+	            if (cn != null) cn.close();
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        	}
+			}		
+	    return listPro;
 	}
 
 	@Override

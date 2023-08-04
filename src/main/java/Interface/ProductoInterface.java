@@ -11,5 +11,6 @@ public interface ProductoInterface {
 	public int addProducto(Producto p);
 	public int updateProducto (Producto p);
 	public Producto getProducto(int id);
+	public List<Producto>  listFiltro (ServletContext context, String buscar);
 	public int deleteProducto (int id);
 }

@@ -1,13 +1,15 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+    <%@page import="Modelo.Empleado"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+<meta charset="ISO-8859-1">
 <title>Insert title here</title>
 </head>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
 <body>
 <div class="">
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -20,7 +22,8 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 				<div class="navbar-nav">
-						<a class="nav-link" href="ProductoS?menu=listar2"  target="myFrame">Productos</a> 
+						<a class="nav-link" href="ProductoS?menu=listarAdmin"  target="myFrame">Productos</a> 
+						<a class="nav-link" href="EmpleadoS?menu=listar" target="myFrame">Empleados</a> 					
 						<a class="nav-link" href="ClienteS?menu=listar" target="myFrame">Clientes</a>						
 						<a class="nav-link" href="VentaS?menu=listar" target="myFrame">Ventas</a>
 						<a class="nav-link" aria-current="page" href="info.jsp" target="myFrame">Info</a> 
@@ -31,7 +34,7 @@
 			<div class="dropdown">
 				<button class="btn btn-secondary dropdown-toggle" type="button"
 					id="dropdownMenuButton1" data-bs-toggle="dropdown"
-					aria-expanded="false">${usuario.getUser()}</button>
+					aria-expanded="false">${usuario.getNom()}</button>
 				<ul class="dropdown-menu dropdown-menu-end text-center"
 					aria-labelledby="dropdownMenuButton1">
 					<li><a class="dropdown-item" href="#"> <svg
@@ -53,8 +56,8 @@
 		</div>
 	</nav>
 </div>
-<br>
-<div style="height: 600px">
+
+<div style="height: 700px">
 	<iframe class="w-100 h-100" name="myFrame"></iframe>
 </div>
 </body>

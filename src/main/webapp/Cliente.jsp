@@ -14,8 +14,20 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 <body>					
 <div class="container-fuid m-4">
+<div class="d-flex justify-content-between">
 	<h3>Módulo Clientes</h3>
-	<div class="row">
+	<form action="ClienteS" method="post">
+				    <div class="form-group d-flex ">				       
+				        <div class="">				        			           
+					        </div>
+					        <div class=" d-flex ">
+					            <input type="text" name="txtBuscar" class="form-control m-1" placeholder=" Ingrese codigo o nombre">
+					            <button type="submit" name="menu" value="Filtro" class="btn btn-outline-info m-1">Buscar</button>
+				       	 </div>			       	  
+				    </div>				
+				</form>	
+</div>
+	<div class="d-flex">
 		<div class="col-6 col-sm-3">
 			<form name="formCliente" action="ClienteS" method="post">
 					<div class="form-group" style="display: none;" >
@@ -111,7 +123,7 @@
                         <td><%= c.getDir() %></td>
                         <td><%= c.getEstado()%></td>                        
 				        <td>
-				            <a href="ClienteS?menu=Editar&code=<%= c.getId() %>" class="bi bi-pencil-square" style="color: #0dcaf0;"></a>
+				            <a href="ClienteS?menu=Editar&code=<%= c.getCodigo() %>" class="bi bi-pencil-square" style="color: #0dcaf0;"></a>
 				            <a href="ClienteS?menu=Eliminar&code=<%= c.getId() %>" class="bi bi-trash3-fill" style="color: #0dcaf0;"></a>
 				        </td>
 				    </tr>

@@ -16,7 +16,19 @@
 
 
 <div class="container-fuid m-4">
-		<h3>Registrar Producto</h3>
+	<div class="d-flex justify-content-between">
+		<h3>Registrar Producto</h3>		
+		<form action="ProductoS" method="post">
+				    <div class="form-group d-flex ">				       
+				        <div class="">				        			           
+					        </div>
+					        <div class=" d-flex ">
+					            <input type="text" name="txtBuscar" class="form-control m-1" placeholder=" Ingrese codigo o nombre">
+					            <button type="submit" name="menu" value="FiltroAdmin" class="btn btn-outline-info m-1">Buscar</button>
+				       	 </div>			       	  
+				    </div>				
+				</form>	
+			</div>			
 		<div class="row">
 			<div class="col-6 col-sm-3">
 				<form action="ProductoS" method="post" enctype="multipart/form-data" name="formProducto">
@@ -53,7 +65,8 @@
 				    <div>
 				        <input class="form-control" type="file" name="txtImagen"  value=""/>				        
 				    </div>
-					</div><br>
+					</div><br>				
+					
 					<div>
 								<% 
 						    String errorMessage = (String) request.getAttribute("error");
@@ -89,12 +102,12 @@
 						%>
 				</div>
 					<div class="form-group my-3 text-end">
-					<a href="ProductoS?menu=limpiar"  class="btn btn-secondary text-white">Nuevo</a>
+					 <a href="ProductoS?menu=limpiar"  class="btn btn-secondary text-white">Nuevo</a>
 					 <input type="submit" name="menu" value="Enviar Datos" class="btn btn-info text-white">					 									
 					</div>
 				</form>
 			</div>
-			<div class="col-6 col-sm-9">
+			<div class="col-6 col-sm-9">				
 				<table class="table text-center">
 					<thead>
 						<tr>

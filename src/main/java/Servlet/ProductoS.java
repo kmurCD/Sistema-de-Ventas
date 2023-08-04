@@ -16,7 +16,6 @@ import java.util.List;
 import Factory.DAOFactory;
 import Interface.ProductoInterface;
 import Modelo.Producto;
-import Servicio.ProductoServicio;
 
 @WebServlet(name = "ProductoS", urlPatterns = {"/ProductoS"})
 @MultipartConfig
@@ -28,7 +27,6 @@ public class ProductoS extends HttpServlet {
 		Producto p = new Producto();
     public ProductoS() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
     
@@ -49,10 +47,14 @@ public class ProductoS extends HttpServlet {
 				getProducto(request, response); break;			
 			case "Eliminar":
 				deleteProducto(request, response); break;
-			case "listar":
-				getProductos(request, response); break;
-			case "listar2":
-				getProductos2(request, response); break;
+			case "listarAdmin":
+				getProdAdmin(request, response); break;
+			case "listVendedor":
+				getProdVendedor(request, response); break;
+			case "Filtro":
+				getFiltroVendedor(request, response); break;			
+			case "FiltroAdmin":
+				getFiltroAdmin(request, response); break;
 			case "limpiar":
 				limpiarProducto(request, response); break;					
 			default:
@@ -86,13 +88,13 @@ public class ProductoS extends HttpServlet {
 		        pdao.addProducto(p);
 		        
 		        request.setAttribute("mensaje", "Producto agregado con éxito.");
-		        getProductos(request, response);    			
+		        getProdAdmin(request, response);    			
 		    } catch (NumberFormatException e) {
 		        System.out.println("Error agregar Producto");
 		    }
 		} else {    	
 		    System.out.println("Casilla Codigo vacia");
-		    getProductos(request, response); 
+		    getProdAdmin(request, response); 
 		}   		
 		
 	}
@@ -111,6 +113,9 @@ public class ProductoS extends HttpServlet {
 		    InputStream fileContent = filePart.getInputStream();
 		    byte[] imgBytes = fileContent.readAllBytes();
 		    p.setImagen(imgBytes);
+		} else {
+		    Producto existingProduct = pdao.getProducto(id); 
+		    p.setImagen(existingProduct.getImagen());
 		}
 		
 		p.setId((id));		
@@ -125,24 +130,25 @@ public class ProductoS extends HttpServlet {
 		
 		if (value == 1) {
 			request.setAttribute("mensaje", "Producto Actualizado con éxito.");
-			getProductos(request,response);    			
+			getProdAdmin(request,response);    			
 		}else {    	
 			System.out.println("Error agregar producto");
 			request.getRequestDispatcher("Producto.jsp").forward(request, response);
 		} 
 	}
-	private void getProductos(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-	    ServletContext context = getServletContext();
-	    ProductoServicio productoServicio = new ProductoServicio();
-	    List<Producto> lista = productoServicio.listProducto(context);
+	private void getProdAdmin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+	    ServletContext context = getServletContext();	  
+	    List<Producto> lista = pdao.listProducto(context);
 
 	    if (lista != null) {
 	        request.setAttribute("productos", lista);
-	        request.getRequestDispatcher("Producto.jsp").forward(request, response);
+	        request.getRequestDispatcher("ProductoAdmin.jsp").forward(request, response);
 	    } else {
+	    	System.out.println("Error al encontrar producto");
 	        request.setAttribute("mensaje", "Error al listar");
-	        request.getRequestDispatcher("Producto.jsp").forward(request, response);
+	        request.getRequestDispatcher("ProductoAdmin.jsp").forward(request, response);
 	    }
 	}
 		
@@ -153,10 +159,10 @@ public class ProductoS extends HttpServlet {
 	    
 	    if (p != null) {
 	        request.setAttribute("producto", p);
-	        getProductos(request, response);
+	        getProdAdmin(request, response);
 	    } else {
 	        request.setAttribute("mensaje", "Error al obtener producto");
-	        request.getRequestDispatcher("Producto.jsp").forward(request, response);
+	        request.getRequestDispatcher("ProductoAdmin.jsp").forward(request, response);
 	    }	
 	}
 	private void deleteProducto(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -165,32 +171,69 @@ public class ProductoS extends HttpServlet {
 	    
 	    if (value == 1) {
 	    	request.setAttribute("mensaje", "Producto eliminado");
-	    	getProductos(request, response);		        
+	    	getProdAdmin(request, response);		        
 	    } else {
 	        request.setAttribute("mensaje", "Error al eliminar el producto");
-	        request.getRequestDispatcher("Principal.jsp").forward(request, response);
+	        request.getRequestDispatcher("ProductoAdmin.jsp").forward(request, response);
 	    }
 	}
-	private void getProductos2(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	private void getProdVendedor(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 	    ServletContext context = getServletContext();
-	    ProductoServicio productoServicio = new ProductoServicio();
-	    List<Producto> lista = productoServicio.listProducto(context);
+	    List<Producto> lista = pdao.listProducto(context);
 	    if (lista != null) {
-	        request.setAttribute("productos", lista);
-	        request.getRequestDispatcher("Producto2.jsp").forward(request, response);
+	        request.setAttribute("productos", lista);	      
+	        request.getRequestDispatcher("ProductoVendedor.jsp").forward(request, response);
 	    } else {
 	        request.setAttribute("mensaje", "Error al listar");
-	        request.getRequestDispatcher("Producto2.jsp").forward(request, response);
+	        request.getRequestDispatcher("ProductoVendedor.jsp").forward(request, response);
 	    }
 	}	
 	private void limpiarProducto(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Producto p = new Producto () ;
 		request.setAttribute("produto", p);
-		getProductos(request, response);
+		getProdAdmin(request, response);
 		
 	}
+	private void getFiltroVendedor(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	   
+		String b = request.getParameter("txtBuscar");
+	    if (b != null && !b.isEmpty()) {	 
+	    	ServletContext context = getServletContext();
+	        List<Producto> lista = pdao.listFiltro(context, b );
 
+	        if (lista != null) {
+	            request.setAttribute("productos", lista);
+	            request.getRequestDispatcher("ProductoVendedor.jsp").forward(request, response);
+	        } else {
+	            request.setAttribute("mensaje", "Error al listar");
+	        }
+	    } else {	    	
+	        request.setAttribute("error", "Ingrese un código o nombre para buscar.");
+	        getProdVendedor(request, response);
+	    }
+	}
+	
+	private void getFiltroAdmin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		   
+		String b = request.getParameter("txtBuscar");
+	    if (b != null && !b.isEmpty()) {	 
+	    	ServletContext context = getServletContext();
+	        List<Producto> lista = pdao.listFiltro(context, b );
+
+	        if (lista != null) {
+	            request.setAttribute("productos", lista);
+	            request.getRequestDispatcher("ProductoAdmin.jsp").forward(request, response);
+	        } else {
+	        	System.out.println("No se encuentra el producto");
+	            request.setAttribute("error", "Error al listar");
+	        }
+	    } else {	    	
+	        request.setAttribute("error", "Ingrese un código o nombre para buscar.");
+	        getProdAdmin(request, response);
+	    }
+	}
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {	
 
 		response.getWriter().append("Served at: ").append(request.getContextPath());
