@@ -1,13 +1,15 @@
 package Interface;
 
-import java.util.List;
 
 import Modelo.Venta;
 
 public interface VentaInterface {
-	public List<Venta> listVenta ();
-	public int addVenta(Venta p);
-	public int updateVenta (Venta p);
-	public Venta getVenta(int id);
-	public int deleteVenta (int id);
+
+	public int guardarVenta(Venta ve);
+	public int guardarDetalleVenta(Venta venta);
+	public String GenerarSerie();
+	public String IdVentas();
+	public Venta ValidarProductoEnUso(int id);
+	public Venta ValidarEmpleado(int id);
+	public Venta ValidarCliente(int id);
 }

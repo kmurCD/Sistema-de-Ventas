@@ -12,5 +12,6 @@ public interface EmpleadoInterface {
 	public Empleado getEmpleado(int id);
 	public int deleteEmpleado (int id);
 	public Empleado  Validacion (String user, String dni, String rol);
+	public List<Empleado> listFiltro(String b);
 	
 }

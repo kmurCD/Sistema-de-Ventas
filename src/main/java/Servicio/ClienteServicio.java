@@ -133,7 +133,7 @@ public class ClienteServicio implements ClienteInterface {
 		try {
 
 			cn = Conexion.getConnection();
-				String query = "SELECT * FROM cliente where Codigo="+id;
+				String query = "SELECT * FROM cliente where Dni="+id;
 				
 				psmt = cn.prepareStatement(query);								
 				rs = psmt.executeQuery();									
@@ -177,7 +177,7 @@ public class ClienteServicio implements ClienteInterface {
 			  if (isNumeric) {
 		        
 		            int code = Integer.parseInt(buscar);
-		            query = "SELECT * FROM cliente WHERE Codigo=?";
+		            query = "SELECT * FROM cliente WHERE Dni=?";
 		            psmt = cn.prepareStatement(query);
 		            psmt.setInt(1, code);
 		        } else {

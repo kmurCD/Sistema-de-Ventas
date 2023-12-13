@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import Conexion.Conexion;
 import Interface.EmpleadoInterface;
+import Modelo.Cliente;
 import Modelo.Empleado;
 
 public class EmpleadoServicio implements EmpleadoInterface {
@@ -147,7 +148,7 @@ public class EmpleadoServicio implements EmpleadoInterface {
 			try {
 
 				cn = Conexion.getConnection();
-					String query = "SELECT * FROM empleado where IdEmpleado="+id;
+					String query = "SELECT * FROM empleado where Dni="+id;
 					
 					psmt = cn.prepareStatement(query);								
 					rs = psmt.executeQuery();									
@@ -222,7 +223,8 @@ public class EmpleadoServicio implements EmpleadoInterface {
 				rs=psmt.executeQuery();
 				
 				while (rs.next()){
-				em.setUser (rs.getString("IdEmpleado"));
+				em.setId (rs.getInt("IdEmpleado"));
+				em. setNom(rs.getString("Nombres"));
 				em. setUser (rs.getString("User"));
 				em. setDni (rs.getString("Dni"));			
 				em. setRol(rs.getString("Rol"));
@@ -234,6 +236,64 @@ public class EmpleadoServicio implements EmpleadoInterface {
 			return em;
 			
 			}
+		@Override
+		public List<Empleado> listFiltro(String buscar) {
+
+			List<Empleado> listPro = new ArrayList<Empleado>();
+			PreparedStatement psmt = null;
+			Connection cn = null;
+			ResultSet rs = null;
+			try {
+
+				cn =Conexion.getConnection();
+				
+				boolean isNumeric = buscar.matches("\\d+");
+					String query;
+				  if (isNumeric) {
+			        
+			            int code = Integer.parseInt(buscar);
+			            query = "SELECT * FROM empleado WHERE Dni=?";
+			            psmt = cn.prepareStatement(query);
+			            psmt.setInt(1, code);
+			        } else {
+			          
+			            query = "SELECT * FROM empleado WHERE Nombres LIKE ?";
+			            psmt = cn.prepareStatement(query);
+			            psmt.setString(1, "%" + buscar + "%");
+			        }
+				  
+					rs = psmt.executeQuery();
+
+					while(rs.next()) {
+						
+						Empleado em = new Empleado();	
+					
+						em.setId(rs.getInt ("IdEmpleado"));
+						em.setRol(rs.getString("Rol"));
+						em.setDni(rs.getString("Dni"));
+						em.setNom(rs.getString("Nombres"));
+						em.setTel(rs.getString("Telefono"));
+						em.setEstado(rs.getString("Estado"));
+						em.setUser (rs.getString("User"));								
+		            
+					listPro.add(em);
+					System.out.println("Listado Ok");
+					}
+				}catch (Exception e) {
+				e.printStackTrace();
+					}
+			finally {
+		        try {
+		            if (rs != null) rs.close();
+		            if (psmt != null) psmt.close();
+		            if (cn != null) cn.close();
+		        } catch (Exception e) {
+		            e.printStackTrace();
+		        	}
+				}		
+		    return listPro;
+		}
+		
 					
 }		
 			

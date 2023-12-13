@@ -4,10 +4,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
 <title>Insert title here</title>
 </head>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 <body>
 <div class="">
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -20,30 +21,25 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 				<div class="navbar-nav">
-						<a class="nav-link" href="ProductoS?menu=listVendedor"  target="myFrame">Productos</a> 
-						<a class="nav-link" href="ClienteS?menu=listar" target="myFrame">Clientes</a>						
-						<a class="nav-link" href="VentaS?menu=listar" target="myFrame">Ventas</a>
-						<a class="nav-link" aria-current="page" href="info.jsp" target="myFrame">Info</a> 
+						<a class="nav-link bi bi-bag" href="ProductoS?menu=listVendedor"  target="myFrame"> Productos</a> 
+						<a class="nav-link bi bi-person-add" href="ClienteS?menu=listar" target="myFrame"> Clientes</a>						
+						<a class="nav-link bi bi-cart" href="VentaS?menu=Principal" target="myFrame"> Ventas</a>
+						<a class="nav-link bi bi-info-circle" aria-current="page" href="info.jsp" target="myFrame"> Info</a> 
 				</div>
 			</div>
-			<!-- Example split danger button -->
-
 			<div class="dropdown">
 				<button class="btn btn-secondary dropdown-toggle" type="button"
 					id="dropdownMenuButton1" data-bs-toggle="dropdown"
-					aria-expanded="false">${usuario.getUser()}</button>
+					aria-expanded="false">${usuario.getNom()}</button>
 				<ul class="dropdown-menu dropdown-menu-end text-center"
 					aria-labelledby="dropdownMenuButton1">
-					<li><a class="dropdown-item" href="#"> <svg
-								xmlns="http://www.w3.org/2000/svg" width="48" height="48"
-								fill="#0dcaf0" class="bi bi-person-square" viewBox="0 0 16 16">
-					  <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
-					  <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm12 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1v-1c0-1-1-4-6-4s-6 3-6 4v1a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12z" />
-						</svg>
-					</a></li>
-					<li><a class="dropdown-item" href="#">Usuario:
-							${usuario.getUser()}</a></li>
-					<li><a class="dropdown-item" href="#">${usuario.getNom()}</a></li>
+					<li><a class=" icono dropdown-item"  href="#">
+					<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="#0dcaf0" class="bi bi-person-circle" viewBox="0 0 16 16">
+  						<path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+  						<path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+					</svg>					
+					</a></li>					
+					<li><a class="dropdown-item" href="#">${usuario.getUser()}</a></li>							
 					<li><hr class="dropdown-divider"></li>
 					<li><form action="Validacion" method="post">
 							<button name="accion" value="Salir" class="dropdown-item">Salir</button>
@@ -54,8 +50,9 @@
 	</nav>
 </div>
 <br>
-<div style="height: 700px">
+<div style="height: 90vh">
 	<iframe class="w-100 h-100" name="myFrame"></iframe>
 </div>
+<div class="bg-dark navbar navbar-expand-lg ">nav</div>
 </body>
 </html>

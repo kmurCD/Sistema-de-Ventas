@@ -11,19 +11,22 @@ import jakarta.servlet.http.Part;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.SQLException;
 import java.util.List;
-
 import Factory.DAOFactory;
 import Interface.ProductoInterface;
+import Interface.VentaInterface;
 import Modelo.Producto;
+import Modelo.Venta;
 
 @WebServlet(name = "ProductoS", urlPatterns = {"/ProductoS"})
 @MultipartConfig
 public class ProductoS extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+		
 		DAOFactory daoFactory = DAOFactory.getDaoFactory(DAOFactory.MYSQL);
 		ProductoInterface pdao = daoFactory.getProducto();
+		VentaInterface vdao = daoFactory.getVenta();
 		Producto p = new Producto();
     public ProductoS() {
         super();
@@ -105,19 +108,30 @@ public class ProductoS extends HttpServlet {
 		Double pre = Double.parseDouble(request.getParameter("txtPrecio"));
 		int stk = Integer.parseInt(request.getParameter("txtStock"));
 		String est= request.getParameter("txtEstado");
-		String cdo= request.getParameter("txtCodigo");		
-		
+		String cdo= request.getParameter("txtCodigo");				
 		Part filePart = request.getPart("txtImagen");
         
 		if (filePart.getSize() > 0) {
 		    InputStream fileContent = filePart.getInputStream();
 		    byte[] imgBytes = fileContent.readAllBytes();
 		    p.setImagen(imgBytes);
+		    System.out.println("Bytes de imagen desde el archivo: " + imgBytes.length);
+		    
+		    
 		} else {
-		    Producto existingProduct = pdao.getProducto(id); 
-		    p.setImagen(existingProduct.getImagen());
+			
+			Producto img= pdao.getProducto( id,Integer.parseInt(cdo));
+			int cpo =img.getId();
+			int cdgo =(id);
+			
+			if ( cpo == cdgo) {
+				byte[] existingImgBytes = img.getImagen();
+			    p.setImagen(existingImgBytes);			  
+			}else {
+				request.setAttribute("error", "No se puede actualizar el producto.");
+				getProdAdmin(request,response);
+			}
 		}
-		
 		p.setId((id));		
 		p.setNombre(nom);
 		p.setPrecio(pre);
@@ -153,30 +167,46 @@ public class ProductoS extends HttpServlet {
 	}
 		
 	private void getProducto(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		ServletContext context = getServletContext();
 		String code = request.getParameter("code");
-	    Producto p = pdao.getProducto(Integer.parseInt(code));
+	    Producto p = pdao.getProducto(0,Integer.parseInt(code));	  
+	    List<Producto> lista = pdao.listFiltro(context, code );
 	    
 	    if (p != null) {
 	        request.setAttribute("producto", p);
-	        getProdAdmin(request, response);
+	        request.setAttribute("productos", lista);
+	        request.getRequestDispatcher("ProductoAdmin.jsp").forward(request, response);
 	    } else {
 	        request.setAttribute("mensaje", "Error al obtener producto");
 	        request.getRequestDispatcher("ProductoAdmin.jsp").forward(request, response);
 	    }	
 	}
 	private void deleteProducto(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int code = Integer.parseInt (request.getParameter("code"));
-	    int value = pdao.deleteProducto(code);		    
-	    
-	    if (value == 1) {
-	    	request.setAttribute("mensaje", "Producto eliminado");
-	    	getProdAdmin(request, response);		        
-	    } else {
-	        request.setAttribute("mensaje", "Error al eliminar el producto");
-	        request.getRequestDispatcher("ProductoAdmin.jsp").forward(request, response);
-	    }
+	    int code = Integer.parseInt(request.getParameter("code"));	    
+	     Venta ven = vdao.ValidarProductoEnUso(code);
+	     
+	     if ( ven != null) {				 
+	    	 int IdProducto = ven.getIdproducto(); 		    	
+	    	 if ( code == IdProducto) {
+	    		 request.setAttribute("error", "No se puede eliminar el Producto. Está siendo utilizado en una boleta.");			 
+	    		 getProdAdmin(request, response);
+		     }else {
+		    	 request.setAttribute("error", "No se pudo validar el Producto.");
+		    	 getProdAdmin(request, response);
+		     }
+	     }else {
+	    	 int value = pdao.deleteProducto(code);
+				if (value == 1) {
+				    request.setAttribute("mensaje", "Producto eliminado");
+				    getProdAdmin(request, response);
+				} else {
+				    request.setAttribute("error", "Error al eliminar el Producto");
+				    getProdAdmin(request, response);				   
+				}
+	     } 
+
 	}
+
 	private void getProdVendedor(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 	    ServletContext context = getServletContext();

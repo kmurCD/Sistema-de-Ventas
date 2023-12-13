@@ -1,11 +1,15 @@
 package Servlet;
 
 import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletRequest;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import java.io.IOException;
+import java.net.URLEncoder;
 
 import Factory.DAOFactory;
 import Interface.EmpleadoInterface;
@@ -37,8 +41,11 @@ public class Validacion extends HttpServlet {
 	        em = edao.Validacion(user, dni, rol); 
 	
 	        if (em.getUser() != null) {
-	            request.setAttribute("usuario", em);
-	
+	        	HttpSession session = request.getSession();
+	        	int tiempoEnSegundos = 900;
+	            session.setMaxInactiveInterval(tiempoEnSegundos);
+	        	session.setAttribute("usuario", em);	                    	
+	        	
 	            if ("Administrador".equalsIgnoreCase(rol)) {
 	                request.getRequestDispatcher("PrincipalAdmin.jsp").forward(request, response);
 	            } else if ("Vendedor".equalsIgnoreCase(rol)) {

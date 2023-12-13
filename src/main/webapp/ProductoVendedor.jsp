@@ -51,15 +51,15 @@
 					        </div>
 					        <div class="col-sm-2 d-flex ">
 					            <input type="text" name="txtBuscar" class="form-control m-1" placeholder="Ingrese codigo o nombre">
-					            <button type="submit" name="menu" value="Filtro" class="btn btn-outline-info m-1">Buscar</button>
+					            <button type="submit" name="menu" value="Filtro" class="btn btn-outline-secondary m-1">Buscar</button>
 				       	 </div>			       	  
 				    </div>
 				
 				</form>			
-				<table class="table">
-					<thead>
+				<table class="table text-center table-bordered table-hover align-middle">
+					<thead class="table-secondary">
 						<tr>
-							<th>Id</th>
+							<th>ID</th>
 							<th>Codigo</th>
 							<th>Nombre</th>
 							<th>Precio</th>

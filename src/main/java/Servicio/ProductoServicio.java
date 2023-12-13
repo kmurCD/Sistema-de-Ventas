@@ -145,17 +145,54 @@ public class ProductoServicio implements ProductoInterface {
 	    }
 	    return value;	
 	}
+public int updateStock(Producto p) {
+		
+		int value = 0;
+	    PreparedStatement psmt = null;
+	    Connection cn = null;		
+	   try {
+		   	cn = Conexion.getConnection();
+		    String query;
+		    
+		    query = "UPDATE producto SET  Stock=? WHERE IdProducto=?";
+	      	        		
+	        psmt = cn.prepareStatement(query);	      
+	        psmt.setInt(1, p.getStock());	        
+	        psmt.setInt(2, p.getId());
+	        
+	       
+	        
+	        value = psmt.executeUpdate();
+	        System.out.println("Se actualizo el Stok");
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    } finally {
+	        try {
+	            if (psmt != null) psmt.close();
+	            if (cn != null) cn.close();
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	    }
+	    return value;	
+	}
 	@Override
-	public Producto getProducto(int id) {
+	public Producto getProducto(int id , int cod) {
 		
 		Producto p = null;
 		PreparedStatement psmt = null;
 		Connection cn = null;
 		ResultSet rs = null;
 		try {
-
-			cn = Conexion.getConnection();
-				String query = "SELECT * FROM producto where IdProducto="+id;
+			String query = null;
+				cn = Conexion.getConnection();
+				
+				if (id > 0 ){
+					 query = "SELECT * FROM producto where IdProducto="+id;
+				}else {
+					 query = "SELECT * FROM producto where Codigo="+cod;
+				}
+				
 				
 				psmt = cn.prepareStatement(query);								
 				rs = psmt.executeQuery();									
@@ -167,8 +204,10 @@ public class ProductoServicio implements ProductoInterface {
 				p.setPrecio(rs.getDouble("Precio"));
 				p.setStock(rs.getInt("Stock"));
 				p.setEstado(rs.getString("Estado"));
-				p.setCodigo(rs.getInt("Codigo"));
-				p.setImagen (rs.getBytes("Imagen"));						
+				p.setCodigo(rs.getInt("Codigo"));		
+				p.setImagen(rs.getBytes("Imagen"));
+				
+					
 				}
 				System.out.println("Se obtuvo un dato");
 			}catch (Exception e) {
@@ -233,8 +272,7 @@ public class ProductoServicio implements ProductoInterface {
 		                    byte[] imagenBytes = Files.readAllBytes(Paths.get(realPath));                   
 		                    String imgPre64 = Base64.getEncoder().encodeToString(imagenBytes);
 		                    p.setBase64(imgPre64);
-	                } catch (IOException e) {
-	                   
+	                } catch (IOException e) {	                   
 	                    e.printStackTrace();
 	                }
 				}          

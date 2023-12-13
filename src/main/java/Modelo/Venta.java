@@ -1,21 +1,36 @@
 package Modelo;
 
+import java.sql.Date;
+
+import javax.xml.crypto.Data;
+
 public class Venta {
 	
 	private Integer id;
 	private	Integer item;
 	private	Integer idcliente;
+	private	Integer idVenta;
 	private	Integer idempleado;
 	private	Integer idproducto;
 	private	String 	Numserie;
+	private	String 	CodigoP;
 	private	String	DescripcionP;		
-	private	String 	fecha;
+	private	Date 	fecha;
 	private	Double 	precio;		
-	private	Integer caNeidad;
+	private	Integer Cantidad;
 	private	Double 	subtotal;	
 	private	Double 	monto;
 	private	String 	estado;
 		
+
+
+	public String getCodigoP() {
+		return CodigoP;
+	}
+
+	public void setCodigoP(String codigoP) {
+		CodigoP = codigoP;
+	}
 
 	public Integer getId() {
 		return id;
@@ -73,11 +88,11 @@ public class Venta {
 		DescripcionP = descripcionP;
 	}
 
-	public String getFecha() {
+	public Date getFecha() {
 		return fecha;
 	}
 
-	public void setFecha(String fecha) {
+	public void setFecha(Date fecha) {
 		this.fecha = fecha;
 	}
 
@@ -89,12 +104,12 @@ public class Venta {
 		this.precio = precio;
 	}
 
-	public Integer getCaNeidad() {
-		return caNeidad;
+	public Integer getCantidad() {
+		return Cantidad;
 	}
 
-	public void setCaNeidad(Integer caNeidad) {
-		this.caNeidad = caNeidad;
+	public void setCantidad(Integer Cantidad) {
+		this.Cantidad = Cantidad;
 	}
 
 	public Double getSubtotal() {
@@ -120,6 +135,18 @@ public class Venta {
 	public void setEstado(String estado) {
 		this.estado = estado;
 	}
+
+	public Integer getIdVenta() {
+		return idVenta;
+	}
+
+	public void setIdVenta(Integer idVenta) {
+		this.idVenta = idVenta;
+	}
+
+	
+	}
  
 	
-}
+	
+

@@ -1,6 +1,5 @@
 package Servlet;
 
-import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -10,15 +9,16 @@ import java.io.IOException;
 import java.util.List;
 import Factory.DAOFactory;
 import Interface.ClienteInterface;
+import Interface.VentaInterface;
 import Modelo.Cliente;
-import Modelo.Producto;
+import Modelo.Venta;
 
 @WebServlet(name = "ClienteS", urlPatterns = {"/ClienteS"})
 public class ClienteS extends HttpServlet {
 	private static final long serialVersionUID = 1L;     
 	DAOFactory daoFactory = DAOFactory.getDaoFactory(DAOFactory.MYSQL);
 	ClienteInterface cdao = daoFactory.getCliente();
-
+	VentaInterface vdao = daoFactory.getVenta();
 	Cliente cli = new Cliente();
 	
     public ClienteS() {
@@ -61,9 +61,8 @@ public class ClienteS extends HttpServlet {
 	    String nom = request.getParameter("txtNombres");
 	    String dir = request.getParameter("txtDireccion");
 	    String est = request.getParameter("txtEstado");
-	    String codStr = request.getParameter("txtCodigo");
 
-	    if (codStr.isEmpty() || dni.isEmpty() || nom.isEmpty() || dir.isEmpty() || est.isEmpty()) {
+	    if ( dni.isEmpty() || nom.isEmpty() || dir.isEmpty() || est.isEmpty()) {
 	        request.setAttribute("error", "Debe llenar todos los campos.");
 	    } else {
 	        try {
@@ -71,7 +70,7 @@ public class ClienteS extends HttpServlet {
 	            cli.setNom(nom);
 	            cli.setDir(dir);
 	            cli.setEstado(est);
-	            cli.setCodigo(Integer.parseInt(codStr));
+	            
 
 	            cdao.addCliente(cli);
 	            request.setAttribute("mensaje", "Cliente agregado con éxito.");
@@ -89,28 +88,27 @@ public class ClienteS extends HttpServlet {
 	    String nom = request.getParameter("txtNombres");
 	    String dir = request.getParameter("txtDireccion");
 	    String est = request.getParameter("txtEstado");
-	    String codStr = request.getParameter("txtCodigo");
+	 
 
-	    if (dni.isEmpty() || nom.isEmpty() || dir.isEmpty() || est.isEmpty() || codStr.isEmpty()) {
+	    if (dni.isEmpty() || nom.isEmpty() || dir.isEmpty() || est.isEmpty()) {
 	        request.setAttribute("error", "Debe llenar todos los campos.");
 	        getClientes(request, response);
 	        return; 
 	    }
 
-	    if (!codStr.matches("\\d+")) {
-	        request.setAttribute("error", "El campo Código solo debe contener números");
+	    if (!dni.matches("\\d+")) {
+	        request.setAttribute("error", "El campo DNI solo debe contener números");
 	        getClientes(request, response);
 	        return; 
 	    }
-
-	    int cod = Integer.parseInt(codStr);
+	   
 
 	    cli.setId(code);
 	    cli.setDni(dni);
 	    cli.setNom(nom);
 	    cli.setDir(dir);
 	    cli.setEstado(est);
-	    cli.setCodigo(cod);
+	   
 
 	    int value = cdao.updateCliente(cli);
 
@@ -156,21 +154,38 @@ public class ClienteS extends HttpServlet {
 	private void deleteCliente(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		int code = Integer.parseInt (request.getParameter("code"));
-	    int value = cdao.deleteCliente(code);		    
+		Venta ven = vdao.ValidarCliente(code); 		    
 	    
-	    if (value == 1) {
-	    	request.setAttribute("mensaje", "Cliente eliminado con éxito");
-	        getClientes(request, response);		        
-	    } else {
-	        request.setAttribute("error", "Error al eliminar el cliente");
-	        request.getRequestDispatcher("Cliente.jsp").forward(request, response);
-	    }
+		if ( ven != null) {				 
+	    	 int IdCliente = ven.getIdcliente(); 		    	
+	    	 if ( code == IdCliente) {
+	    		 request.setAttribute("error", "No se puede eliminar el Cliente. Está siendo utilizado en una boleta.");			 
+	    		 getClientes(request, response);
+		     }else {
+		    	 request.setAttribute("error", "No se pudo validar el Cliente.");
+		    	 getClientes(request, response);
+		     }
+	     }else {
+	    	 int value = cdao.deleteCliente(code);
+				if (value == 1) {
+				    request.setAttribute("mensaje", "Cliente eliminado");
+				    getClientes(request, response);
+				} else {
+				    request.setAttribute("error", "Error al eliminar el Cliente");
+				    getClientes(request, response);				   
+				}
+	     } 
+
 	}
 
 	private void limpiarCliente(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Cliente c = new Cliente () ;
+		List<Cliente> lista = cdao.listCliente();
+		request.setAttribute("clientes", lista);
 		request.setAttribute("cliente", c);
-		getClientes(request, response);	
+		System.out.println("Limpiando Ok");
+		
+		request.getRequestDispatcher("Cliente.jsp").forward(request, response);	
 	}
 	
 	private void getFiltro(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

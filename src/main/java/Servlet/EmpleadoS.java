@@ -9,13 +9,17 @@ import java.io.IOException;
 import java.util.List;
 import Factory.DAOFactory;
 import Interface.EmpleadoInterface;
+import Interface.VentaInterface;
+import Modelo.Cliente;
 import Modelo.Empleado;
+import Modelo.Venta;
 
 @WebServlet(name = "EmpleadoS", urlPatterns = {"/EmpleadoS"})
 public class EmpleadoS extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 		DAOFactory daoFactory = DAOFactory.getDaoFactory(DAOFactory.MYSQL);
 		EmpleadoInterface edao = daoFactory.getEmpleado();
+		VentaInterface vdao = daoFactory.getVenta();
 		Empleado em = new Empleado();
    
     public EmpleadoS() {
@@ -42,13 +46,37 @@ public class EmpleadoS extends HttpServlet {
 				deleteEmpleado(request, response); break;
 			case "listar":
 				getEmpleados(request, response); break;
+			case "Filtro":
+				getFiltro(request, response); break;			
 			case "limpiar":
 				limpiarEmpleado(request, response); break;					
 			default:
 				break;
 			}
 }  	
-    	private void addEmpleado(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	private void getFiltro(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    		
+    		String b = request.getParameter("txtBuscar");
+    	    if (b != null && !b.isEmpty()) {	 	    	
+    	        List<Empleado> lista = edao.listFiltro(b );
+
+    	        if (lista != null) {
+    	            request.setAttribute("empleados", lista);
+    	            request.getRequestDispatcher("Empleado.jsp").forward(request, response);
+    	        } else {
+    	        	getEmpleados(request, response);
+    	            request.setAttribute("mensaje", "Error al listar");
+    	        }
+    	    } else {	    	
+    	        request.setAttribute("error", "Ingrese un código o nombre para buscar.");
+    	        getEmpleados(request, response);
+    	    }
+    	}
+		
+
+
+
+		private void addEmpleado(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     		
     		
     		String dni = request.getParameter("txtDni");
@@ -58,7 +86,7 @@ public class EmpleadoS extends HttpServlet {
     		String user = request.getParameter("txtUsuario");
     		String rol = request.getParameter("txtRol");  
     		
-    		if (dni.isEmpty() || nom.isEmpty() || tef.isEmpty() || est.isEmpty() || user.isEmpty() || rol.isEmpty()) {
+    		if (dni.isEmpty() || nom.isEmpty() || tef.isEmpty() || est.isEmpty() || user.isEmpty() ) {
     	        request.setAttribute("error", "Debe llenar todos los campos.");
     		} else {
     	        try {    
@@ -124,29 +152,43 @@ public class EmpleadoS extends HttpServlet {
 		}
 		private void getEmpleado(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 			
-			String code = request.getParameter("code");
+			String code = request.getParameter("code");			
 		    Empleado e = edao.getEmpleado(Integer.parseInt(code));
 		    
+		    List<Empleado> lista = edao.listFiltro(code);
 		    if (e != null) {
-		        request.setAttribute("empleado", e);
-		        getEmpleados(request, response);
+		    	request.setAttribute("empleado", e);
+		        request.setAttribute("empleados", lista);
+		        request.getRequestDispatcher("Empleado.jsp").forward(request, response);
 		    } else {
 		        request.setAttribute("mensaje", "Error al obtener empleado");
-		        request.getRequestDispatcher("Principal.jsp").forward(request, response);
+		        request.getRequestDispatcher("Empleado.jsp").forward(request, response);
 		    }						
 		}
 		private void deleteEmpleado(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		   
 			int code = Integer.parseInt (request.getParameter("code"));
-		    int value = edao.deleteEmpleado(code);		    
-		    
-		    if (value == 1) {
-		    	request.setAttribute("mensaje", "Empleado eliminado con éxito");
-		        getEmpleados(request, response);		        
-		    } else {
-		        request.setAttribute("mensaje", "Error al eliminar el empleado");
-		        request.getRequestDispatcher("Principal.jsp").forward(request, response);
-		    }
+			Venta ven = vdao.ValidarEmpleado(code);
+									
+			 if ( ven != null) {				 
+		    	 int IdEmpleado = ven.getIdempleado(); 		    	
+		    	 if ( code == IdEmpleado) {
+		    		 request.setAttribute("error", "No se puede eliminar el Empleado. Está siendo utilizado en una boleta.");			 
+			    	 getEmpleados(request, response);
+			     }else {
+			    	 request.setAttribute("error", "No se pudo validar el empleado.");
+			    	 getEmpleados(request, response);
+			     }
+		     }else {
+		    	 int value = edao.deleteEmpleado(code);
+					if (value == 1) {
+					    request.setAttribute("mensaje", "Empleado eliminado");
+					    getEmpleados(request, response);
+					} else {
+					    request.setAttribute("error", "Error al eliminar el Empleado");
+					    getEmpleados(request, response);				   
+					}
+		     }
 		}
 		private void limpiarEmpleado(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 			Empleado e = new Empleado () ;

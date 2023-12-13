@@ -2,8 +2,6 @@ package Interface;
 
 import java.util.List;
 import Modelo.Cliente;
-import Modelo.Producto;
-import jakarta.servlet.ServletContext;
 
 public interface ClienteInterface {
 	
